@@ -13,7 +13,7 @@ import Webgis from './pages/Webgis';
 function App() {
   return (
     <BrowserRouter
-      basename={import.meta.env.REACT_APP_STAGE === 'development' ? '' : '/rescue-station-demo'}
+      basename={import.meta.env.REACT_APP_STAGE === 'development' ? '' : '/rescue-station'}
     >
       <Suspense fallback={<Waiting />}>
         <Layout style={{ width: '100vw', backgroundColor: 'white' }}>
