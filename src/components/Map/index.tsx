@@ -52,7 +52,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <div className="leaflet-bottom leaflet-right" style={{ marginBottom: '46vh' }}>
+        <div className="leaflet-top leaflet-left" style={{ marginLeft: 220 }}>
           {layerEdit.length ? (
             <Button
               type="primary"

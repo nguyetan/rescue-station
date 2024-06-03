@@ -1,26 +1,16 @@
 import _ from 'lodash';
+import proj4 from 'proj4';
 
-import { headerCSV } from './options';
+import { EPSGValuesType } from '../types';
+import { EPSGValues, headerCSV } from './options';
 
-// epsg 4326: [lng, lat]
-// epsg 3857: [x, y]
-
-export const epsg4326toEpsg3857 = (coordinate: number[]) => {
-  const lat = coordinate[1];
-  const lng = coordinate[0];
-  const x = (lng * 20037508.34) / 180;
-  let y = Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) / (Math.PI / 180);
-  y = (y * 20037508.34) / 180;
-  return [x, y];
-};
-
-export const epsg3857toEpsg4326 = (coordinate: number[]) => {
-  const x = coordinate[0];
-  const y = coordinate[1];
-  const lng = (x / 20037508.34) * 180;
-  let lat = (y / 20037508.34) * 180;
-  lat = (180 / Math.PI) * (2 * Math.atan(Math.exp((lat * Math.PI) / 180)) - Math.PI / 2);
-  return [lng, lat];
+export const switchEPSG = (
+  current: keyof EPSGValuesType,
+  target: keyof EPSGValuesType,
+  coordinate: number[]
+) => {
+  const convert = proj4(EPSGValues[current], EPSGValues[target]);
+  return convert.forward(coordinate);
 };
 
 export const geoJsonToCsv = (geoJson: any) => {
@@ -60,6 +50,8 @@ export const csvToGeoJson = (csv: any[]) => {
 };
 
 export const csv3857ToGeoJson = (csv: any[], type: string) => {
+  console.log(csv.slice(1));
+
   switch (type) {
     case 'point':
       return {
@@ -69,7 +61,7 @@ export const csv3857ToGeoJson = (csv: any[], type: string) => {
           properties: {},
           geometry: {
             type: 'Point',
-            coordinates: epsg3857toEpsg4326([item[1], item[2]]),
+            coordinates: switchEPSG('EPSG3405', 'EPSG4326', [item[1], item[2]]),
           },
         })),
       };
@@ -82,7 +74,9 @@ export const csv3857ToGeoJson = (csv: any[], type: string) => {
             properties: {},
             geometry: {
               type: 'LineString',
-              coordinates: csv.slice(1).map((item) => epsg3857toEpsg4326([item[1], item[2]])),
+              coordinates: csv
+                .slice(1)
+                .map((item) => switchEPSG('EPSG3405', 'EPSG4326', [item[1], item[2]])),
             },
           },
         ],
@@ -96,7 +90,13 @@ export const csv3857ToGeoJson = (csv: any[], type: string) => {
             properties: {},
             geometry: {
               type: 'Polygon',
-              coordinates: [csv.slice(1).map((item) => epsg3857toEpsg4326([item[1], item[2]]))],
+              coordinates: [
+                csv
+                  .slice(1)
+                  .map((item) =>
+                    switchEPSG('EPSG3405', 'EPSG4326', [Number(item[1]), Number(item[2])])
+                  ),
+              ],
             },
           },
         ],
