@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://vanlinh1602.github.io/rescue-station-demo/",
+  "homepage": "https://nguyetan.github.io/rescue-station/",
   "scripts": {
     "dev": "REACT_APP_STAGE=development vite",
     "windows": "SET REACT_APP_STAGE=development&&vite",
