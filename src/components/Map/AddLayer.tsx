@@ -20,10 +20,18 @@ const AddLayer = ({ onAddLayer, onCancel }: Props) => {
   };
 
   return (
-    <Modal width={400} open title="Thêm Layer" onCancel={onCancel} onOk={handleOk}>
+    <Modal
+      width={400}
+      open
+      title="Thêm Layer"
+      onCancel={onCancel}
+      onOk={handleOk}
+      okText="Lưu"
+      cancelText="Hủy"
+    >
       <Form form={form} layout="vertical">
-        <Row justify="space-between">
-          <Col span={18}>
+        <Row gutter={[24, 12]}>
+          <Col span={14}>
             <Form.Item
               label="Tên layer"
               name="name"
@@ -32,7 +40,7 @@ const AddLayer = ({ onAddLayer, onCancel }: Props) => {
               <Input name="name" />
             </Form.Item>
           </Col>
-          <Col span={3}>
+          <Col span={10}>
             <Form.Item
               label="Màu"
               name="color"

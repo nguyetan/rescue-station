@@ -70,16 +70,20 @@ const Map = ({ layers, onAddLayer }: Props) => {
               <GeoJSON
                 data={layer.geoJson}
                 pathOptions={{ color: layer.color }}
-                pointToLayer={(_feature, latlng) => {
-                  return L.circleMarker(latlng, {
-                    radius: 8,
-                    fillColor: layer.color,
-                    color: layer.color,
-                    weight: 0.5,
-                    opacity: 1,
-                    fillOpacity: 0.8,
-                  });
-                }}
+                pointToLayer={
+                  layer.converPoint
+                    ? (_feature, latlng) => {
+                        return L.circleMarker(latlng, {
+                          radius: 8,
+                          fillColor: layer.color,
+                          color: layer.color,
+                          weight: 0.5,
+                          opacity: 1,
+                          fillOpacity: 0.8,
+                        });
+                      }
+                    : undefined
+                }
               />
             </LayersControl.Overlay>
           ))}

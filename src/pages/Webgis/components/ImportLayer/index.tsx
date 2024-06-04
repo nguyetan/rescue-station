@@ -34,7 +34,7 @@ const ImportLayer = ({ onUpload, onCancel }: Props) => {
       }
       const geoJson = await convertFileToGeoJson(importType, file);
 
-      onUpload({ geoJson, color: `#${color.toHex()}`, name, id: nanoid() });
+      onUpload({ geoJson, color: `#${color.toHex()}`, name, id: nanoid(), converPoint: true });
     } catch {}
   };
 
@@ -42,6 +42,7 @@ const ImportLayer = ({ onUpload, onCancel }: Props) => {
     <Modal
       title="Thêm layer"
       open
+      width={400}
       onCancel={onCancel}
       footer={[
         <Button key="back" onClick={onCancel}>

@@ -1,4 +1,4 @@
-import { Form, Modal, Select } from 'antd';
+import { Button, Form, Modal, Select } from 'antd';
 
 type Props = {
   layers: { name: string; id: string }[];
@@ -8,20 +8,29 @@ type Props = {
 
 const RemoveLayer = ({ onCancel, onRemoveLayer, layers }: Props) => {
   const [form] = Form.useForm<{ ids: string[] }>();
+
+  const handleRemoveLayer = async () => {
+    try {
+      const { ids } = await form.validateFields();
+      onRemoveLayer(ids);
+    } catch {
+      /* empty */
+    }
+  };
   return (
     <Modal
       open
-      width={400}
+      width={300}
       title="Xóa Layer"
       onCancel={onCancel}
-      onOk={async () => {
-        try {
-          const { ids } = await form.validateFields();
-          onRemoveLayer(ids);
-        } catch {
-          /* empty */
-        }
-      }}
+      footer={[
+        <Button key="back" onClick={onCancel}>
+          Hủy
+        </Button>,
+        <Button type="primary" danger onClick={handleRemoveLayer}>
+          Xóa
+        </Button>,
+      ]}
     >
       <Form form={form} layout="vertical">
         <Form.Item name={'ids'}>
