@@ -26,7 +26,9 @@
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
     "react-leaflet-draw": "^0.20.4",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "safe-buffer": "^5.2.1",
+    "shpjs": "^5.0.1"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.12",
@@ -35,6 +37,7 @@
     "@types/proj4": "^2.5.5",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/shpjs": "^3.4.7",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react-swc": "^3.5.0",

@@ -1,8 +1,6 @@
-import { Button, Form, Modal, Radio, Select } from 'antd';
-import Papa from 'papaparse';
+import { Button, Form, message, Modal, Radio, Select } from 'antd';
 
-import { fileFormats } from '../../../../libs/options';
-import { geoJsonToCsv } from '../../../../libs/utils';
+import { supportedFiles } from '../../../../libs/options';
 import { Layer } from '../../type';
 type Props = {
   onCancel: () => void;
@@ -31,10 +29,8 @@ const ExportLayer = ({ layers, onCancel }: Props) => {
         const blob = new Blob([JSON.stringify(data.geoJson)], { type: 'application/json' });
         url = URL.createObjectURL(blob);
       } else {
-        const csvData = geoJsonToCsv(data.geoJson);
-        const csv = Papa.unparse(csvData);
-        const blob = new Blob([csv], { type: 'text/csv' });
-        url = URL.createObjectURL(blob);
+        message.error('Chưa hỗ trợ định dạng này');
+        return;
       }
       if (url) {
         const a = document.createElement('a');
@@ -74,7 +70,7 @@ const ExportLayer = ({ layers, onCancel }: Props) => {
 
         <Form.Item label="Định dạng" name="format">
           <Radio.Group>
-            {Object.entries(fileFormats).map(([key, name]) => (
+            {Object.entries(supportedFiles).map(([key, name]) => (
               <Radio value={key}>{name}</Radio>
             ))}
           </Radio.Group>

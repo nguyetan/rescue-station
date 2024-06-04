@@ -1,28 +1,15 @@
 /* eslint-disable no-empty */
-import { DeleteOutlined, FileExcelOutlined, InboxOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Col,
-  ColorPicker,
-  Form,
-  Input,
-  Menu,
-  message,
-  Modal,
-  Radio,
-  Row,
-  Typography,
-  Upload,
-} from 'antd';
+import { DeleteOutlined, InboxOutlined } from '@ant-design/icons';
+import { Button, Col, ColorPicker, Form, Input, message, Modal, Radio, Row, Upload } from 'antd';
 import { BaseButtonProps } from 'antd/es/button/button';
 import { Color } from 'antd/es/color-picker';
 import { ColorFactory } from 'antd/es/color-picker/color';
 import { nanoid } from 'nanoid';
-import Papa from 'papaparse';
 import { useState } from 'react';
 
-import { headerCSV, headerCSV3857, mapingType } from '../../../../libs/options';
-import { csv3857ToGeoJson, csvToGeoJson } from '../../../../libs/utils';
+import { supportedFiles } from '../../../../libs/options';
+import { convertFileToGeoJson } from '../../../../libs/utils';
+import { ImportSupportedType } from '../../../../types';
 import { Layer } from '../../type';
 
 type Props = BaseButtonProps & {
@@ -32,38 +19,22 @@ type Props = BaseButtonProps & {
 
 const ImportLayer = ({ onUpload, onCancel }: Props) => {
   const [file, setFile] = useState<File | null>(null);
-  const [importType, setImportType] = useState<string>('geojson');
-  const [form] = Form.useForm<{ color: Color; name: string; type: string }>();
+  const [importType, setImportType] = useState<ImportSupportedType>('geojson');
+  const [form] = Form.useForm<{ color: Color; name: string }>();
 
   const handleConfirm = async () => {
     try {
-      const { color, name, type } = await form.validateFields();
+      const { color, name } = await form.validateFields();
       if (!file) {
         message.error('Vui lòng chọn file');
       }
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        let geoJson;
-        if (importType === 'geojson') {
-          geoJson = JSON.parse(e.target?.result as string);
-        } else {
-          const csv = Papa.parse<string[]>((e.target?.result as string) ?? '');
-          const parsedData = csv?.data.filter((item) => item.every((i) => !!i));
+      if (file?.name.split('.').pop() !== importType) {
+        message.error('File không đúng định dạng');
+        return;
+      }
+      const geoJson = await convertFileToGeoJson(importType, file);
 
-          const header = importType === 'csv3857' ? headerCSV3857 : headerCSV;
-          if (header.some((header, index) => header !== parsedData?.[0]?.[index])) {
-            message.error('File không đúng định dạng');
-            return;
-          }
-          if (importType === 'csv3857') {
-            geoJson = csv3857ToGeoJson(parsedData, type);
-          } else {
-            geoJson = csvToGeoJson(parsedData);
-          }
-        }
-        onUpload({ geoJson, color: `#${color.toHex()}`, name, id: nanoid() });
-      };
-      reader.readAsText(file as Blob);
+      onUpload({ geoJson, color: `#${color.toHex()}`, name, id: nanoid() });
     } catch {}
   };
 
@@ -81,54 +52,27 @@ const ImportLayer = ({ onUpload, onCancel }: Props) => {
         </Button>,
       ]}
     >
-      <Menu
-        onClick={({ key }) => setImportType(key)}
-        selectedKeys={[importType]}
-        mode="horizontal"
-        items={[
-          {
-            label: 'Geojson',
-            key: 'geojson',
-          },
-          {
-            label: 'CSV',
-            key: 'csv',
-          },
-          {
-            label: 'CSV (EPSG-3857)',
-            key: 'csv3857',
-          },
-        ]}
-      />
       <div style={{ marginTop: 10 }}>
         <Form
           form={form}
           layout="vertical"
           initialValues={{ color: new ColorFactory('#3388FF'), type: 'polygon' }}
         >
-          {importType !== 'geojson' ? (
-            <Row justify="space-between">
-              <Button
-                onClick={() => {
-                  const csv = Papa.unparse([importType === 'csv3857' ? headerCSV3857 : headerCSV]);
-                  const blob = new Blob([csv], { type: 'text/csv' });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = `file_mau_${importType}.csv`;
-                  a.click();
-                }}
-                style={{ margin: '10px 0px' }}
-                type="primary"
-                ghost
-              >
-                Tải file mẫu
-                <FileExcelOutlined />
-              </Button>
-            </Row>
-          ) : null}
-          <Row justify="space-between">
-            <Col span={18}>
+          <Form.Item label="Định dạng">
+            <Radio.Group value={importType}>
+              {Object.entries(supportedFiles).map(([type, name]) => (
+                <Radio
+                  key={type}
+                  value={type}
+                  onChange={({ target }) => setImportType(target.value)}
+                >
+                  {name}
+                </Radio>
+              ))}
+            </Radio.Group>
+          </Form.Item>
+          <Row gutter={[24, 4]}>
+            <Col span={12}>
               <Form.Item
                 label="Tên Layer"
                 name="name"
@@ -137,33 +81,19 @@ const ImportLayer = ({ onUpload, onCancel }: Props) => {
                 <Input />
               </Form.Item>
             </Col>
-            <Col>
+            <Col span={12}>
               <Form.Item label="Chọn màu" name="color">
                 <ColorPicker />
               </Form.Item>
             </Col>
           </Row>
-          {importType === 'csv3857' ? (
-            <Row justify="space-between">
-              <Typography.Text>Loại dữ liệu</Typography.Text>
-              <Form.Item name="type">
-                <Radio.Group>
-                  {Object.entries(mapingType).map(([type, name]) => (
-                    <Radio key={type} value={type}>
-                      {name}
-                    </Radio>
-                  ))}
-                </Radio.Group>
-              </Form.Item>
-            </Row>
-          ) : null}
         </Form>
       </div>
       {!file ? (
         <Upload.Dragger
           name="file"
           multiple={false}
-          accept={importType === 'geojson' ? '.geojson' : '.csv'}
+          accept={`.${importType}`}
           beforeUpload={(info) => setFile(info as File)}
           showUploadList={false}
         >

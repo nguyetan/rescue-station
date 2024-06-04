@@ -7,11 +7,10 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { Button, Dropdown, Layout, MenuProps, message } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Map } from '../../components';
 import { ExportLayer, FindStation, ImportLayer, RemoveLayer } from './components';
-import { layerDefault } from './data';
 import { Layer } from './type';
 
 const Webgis = () => {
@@ -20,14 +19,6 @@ const Webgis = () => {
   const [isExport, setIsExport] = useState(false);
   const [isImport, setIsImport] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
-
-  useEffect(() => {
-    const layerData: CustomObject<Layer> = {};
-    layerDefault.forEach((layer) => {
-      layerData[layer.id] = layer;
-    });
-    setLayers(layerData);
-  }, []);
 
   const items: MenuProps['items'] = useMemo(() => {
     return [

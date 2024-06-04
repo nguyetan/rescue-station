@@ -67,7 +67,20 @@ const Map = ({ layers, onAddLayer }: Props) => {
         <LayersControl position="topright">
           {Object.values(layers).map((layer) => (
             <LayersControl.Overlay name={layer.name} key={layer.name} checked>
-              <GeoJSON data={layer.geoJson} pathOptions={{ color: layer.color }} />
+              <GeoJSON
+                data={layer.geoJson}
+                pathOptions={{ color: layer.color }}
+                pointToLayer={(_feature, latlng) => {
+                  return L.circleMarker(latlng, {
+                    radius: 8,
+                    fillColor: layer.color,
+                    color: layer.color,
+                    weight: 0.5,
+                    opacity: 1,
+                    fillOpacity: 0.8,
+                  });
+                }}
+              />
             </LayersControl.Overlay>
           ))}
         </LayersControl>
