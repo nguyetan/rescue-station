@@ -118,7 +118,7 @@ const Home = () => {
                 type="primary"
                 size="large"
                 style={{ backgroundColor: '#d3a971', width: 300 }}
-                onClick={() => navigate('/map')}
+                onClick={() => navigate('/webgis')}
               >
                 Dành cho Cán bộ quản lý
               </Button>
@@ -132,7 +132,7 @@ const Home = () => {
                   borderWidth: 2,
                   width: 300,
                 }}
-                onClick={() => navigate('/map')}
+                onClick={() => navigate('/webgis')}
               >
                 Dành cho công, nhân viên có nhiệm vụ
               </Button>
