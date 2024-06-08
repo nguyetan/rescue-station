@@ -1,21 +1,32 @@
 import { Button, Col, Form, Input, message, Modal, Row } from 'antd';
+import { useDispatch } from 'react-redux';
 
 import { findStationOptions } from '../../../../libs/options';
+import { useWebgisSlice } from '../../store';
 
 type Props = {
   onCancel: () => void;
 };
 
 type FormValues = {
-  x: number;
-  y: number;
+  firstStation: string;
+  lastStation: string;
+  numberStation: string;
 };
 
 const FindStation = ({ onCancel }: Props) => {
   const [form] = Form.useForm<FormValues>();
+  const dispatch = useDispatch();
+
+  const { actions } = useWebgisSlice();
   const handleFindStation = async (key: string) => {
-    console.log(key);
-    message.info('Tính năng đang phát triển');
+    try {
+      const values = await form.validateFields();
+      dispatch(actions.findStation({ ...values, type: key }));
+      onCancel();
+    } catch {
+      message.error('Vui lòng nhập đúng thông tin');
+    }
   };
   return (
     <Modal
@@ -37,23 +48,30 @@ const FindStation = ({ onCancel }: Props) => {
         <Row justify="space-between" gutter={[12, 12]}>
           <Col span={12}>
             <Form.Item
-              label="Nhập X"
-              name="x"
-              rules={[{ required: true, message: 'Vui lòng nhập X' }]}
+              label="Nhập mã trạm đầu"
+              name="firstStation"
+              rules={[{ required: true, message: 'Vui lòng nhập mã trạm đầu' }]}
             >
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              label="Nhập Y"
-              name="y"
-              rules={[{ required: true, message: 'Vui lòng nhập Y' }]}
+              label="Nhập mã trạm cuối"
+              name="lastStation"
+              rules={[{ required: true, message: 'Vui lòng nhập mã trạm đầu' }]}
             >
               <Input />
             </Form.Item>
           </Col>
         </Row>
+        <Form.Item
+          name="numberStation"
+          label="Nhập số trạm cần tìm"
+          rules={[{ required: true, message: 'Vui lòng nhập mã trạm đầu' }]}
+        >
+          <Input />
+        </Form.Item>
       </Form>
     </Modal>
   );

@@ -10,11 +10,11 @@ import { useState } from 'react';
 import { supportedFiles } from '../../../../libs/options';
 import { convertFileToGeoJson } from '../../../../libs/utils';
 import { ImportSupportedType } from '../../../../types';
-import { Layer } from '../../type';
+import { CustomLayer } from '../../type';
 
 type Props = BaseButtonProps & {
   onCancel: () => void;
-  onUpload: (data: Layer) => void;
+  onUpload: (data: CustomLayer) => void;
 };
 
 const ImportLayer = ({ onUpload, onCancel }: Props) => {

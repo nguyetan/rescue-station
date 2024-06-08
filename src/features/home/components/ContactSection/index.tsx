@@ -1,11 +1,10 @@
 import { FacebookOutlined, GithubOutlined, HomeOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Row, Typography } from 'antd';
 
-import home_bg_4 from '../../../../../assets/home_bg_4.jpg';
-import logo from '../../../../../assets/logo.png';
-import logo_des from '../../../../../assets/logo_des.png';
-import menu_bg from '../../../../../assets/menu_bg.jpg';
-import { font } from '../../../../../libs/theme';
+import home_bg_4 from '../../../../assets/home_bg_3.jpg';
+import logo from '../../../../assets/logo.png';
+import logo_des from '../../../../assets/logo_des.png';
+import { font } from '../../../../libs/theme';
 
 export const ContactSection = () => {
   return (
@@ -31,16 +30,13 @@ export const ContactSection = () => {
                 alignItems: 'center',
                 alignContent: 'center',
                 justifyContent: 'center',
-                backgroundImage: `url(${menu_bg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
                 height: 500,
               }}
             >
               <Typography.Text
                 style={{
                   fontSize: 20,
-                  color: '#d3a971',
+                  color: 'white',
                   fontFamily: font.josefinSans,
                 }}
               >
@@ -52,7 +48,7 @@ export const ContactSection = () => {
                   fontWeight: 'bold',
                   fontFamily: font.yesevaOne,
                   lineHeight: 1.2,
-                  color: 'white',
+                  color: '#000',
                 }}
               >
                 Thời gian hoạt động
@@ -62,7 +58,7 @@ export const ContactSection = () => {
                   span={12}
                   style={{
                     textAlign: 'end',
-                    color: 'white',
+                    color: '#000',
                   }}
                 >
                   Các ngày trong tuần
@@ -71,7 +67,7 @@ export const ContactSection = () => {
                   span={12}
                   style={{
                     textAlign: 'start',
-                    color: 'white',
+                    color: '#000',
                   }}
                 >
                   8:00 - 22:00
@@ -82,7 +78,7 @@ export const ContactSection = () => {
                   span={12}
                   style={{
                     textAlign: 'end',
-                    color: 'white',
+                    color: '#000',
                   }}
                 >
                   Thứ 7 - Chủ nhật
@@ -91,7 +87,7 @@ export const ContactSection = () => {
                   span={12}
                   style={{
                     textAlign: 'start',
-                    color: 'white',
+                    color: '#000',
                   }}
                 >
                   9:00 - 20:00
@@ -102,7 +98,7 @@ export const ContactSection = () => {
                   span={12}
                   style={{
                     textAlign: 'end',
-                    color: 'white',
+                    color: '#000',
                   }}
                 >
                   Các ngày lễ
@@ -111,7 +107,7 @@ export const ContactSection = () => {
                   span={12}
                   style={{
                     textAlign: 'start',
-                    color: 'white',
+                    color: '#000',
                   }}
                 >
                   Cả ngày
@@ -120,11 +116,7 @@ export const ContactSection = () => {
             </div>
           </Col>
           <Col span={3}>
-            <img
-              src={logo}
-              alt="logo"
-              style={{ height: 100, objectFit: 'cover', backgroundColor: 'white' }}
-            />
+            <img src={logo} alt="logo" style={{ height: 100, objectFit: 'cover' }} />
           </Col>
           <Col span={12}>
             <div
@@ -139,13 +131,6 @@ export const ContactSection = () => {
                 height: 400,
               }}
             >
-              <Typography.Text
-                style={{
-                  fontFamily: font.josefinSans,
-                }}
-              >
-                Video thuyết trình
-              </Typography.Text>
               <iframe
                 width={'90%'}
                 height={350}

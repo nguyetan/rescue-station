@@ -2,12 +2,15 @@ import './style.css';
 
 import { Button, Col, Layout, Row } from 'antd';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import logo_des from '../../assets/logo_des.png';
-import { ContactSection } from '../../features/user/home/components/ContactSection';
-import { DocumentSection } from '../../features/user/home/components/DocumentSection';
-import { HomeSection } from '../../features/user/home/components/HomeSection';
-import { InfoSection } from '../../features/user/home/components/InfoSection';
+import {
+  ContactSection,
+  DocumentSection,
+  HomeSection,
+  InfoSection,
+} from '../../features/home/components';
 
 const sections = {
   home: 'Trang chủ',
@@ -18,6 +21,7 @@ const sections = {
 
 const Home = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const navigator = useNavigate();
 
   return (
     <Layout>
@@ -49,7 +53,11 @@ const Home = () => {
                 </Col>
               ))}
               <Col>
-                <Button type="primary" style={{ backgroundColor: '#d3a971' }}>
+                <Button
+                  type="primary"
+                  style={{ backgroundColor: '#d3a971' }}
+                  onClick={() => navigator('/manager')}
+                >
                   Thời gian hiện hành
                 </Button>
               </Col>

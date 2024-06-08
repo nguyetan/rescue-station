@@ -1,10 +1,12 @@
 import { Button, Col, Row, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-import home_bg_2 from '../../../../../assets/home_bg_2.jpg';
-import { CustomDivider } from '../../../../../components';
-import { font } from '../../../../../libs/theme';
+import home_bg_2 from '../../../../assets/home_bg_2.jpg';
+import { CustomDivider } from '../../../../components';
+import { font } from '../../../../libs/theme';
 
 export const InfoSection = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div
@@ -83,6 +85,7 @@ export const InfoSection = () => {
         <Button
           type="primary"
           style={{ backgroundColor: 'white', color: 'black', fontWeight: 'bold', marginTop: 40 }}
+          onClick={() => navigate('/webgis')}
         >
           Du khách đăng nhập tại đây!
         </Button>

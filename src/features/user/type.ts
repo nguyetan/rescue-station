@@ -1,9 +1,12 @@
+export type User = {
+  id: string;
+  name?: string;
+  email: string;
+  photoURL?: string;
+};
+
 export type UserState = {
   handling: boolean;
-  data: {
-    id: string;
-    name?: string;
-    email: string;
-    avatar?: string;
-  };
+  authenticated: boolean;
+  data?: User;
 };

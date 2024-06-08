@@ -8,17 +8,29 @@ import {
 } from '@ant-design/icons';
 import { Button, Dropdown, Layout, MenuProps, message } from 'antd';
 import { useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { Map } from '../../components';
-import { ExportLayer, FindStation, ImportLayer, RemoveLayer } from './components';
-import { Layer } from './type';
+import { Map, Waiting } from '../../components';
+import {
+  ExportLayer,
+  FindStation,
+  ImportLayer,
+  RemoveLayer,
+} from '../../features/webgis/components';
+import { useWebgisSlice } from '../../features/webgis/store';
+import { selectWebgisHandling, selectWebgisLayers } from '../../features/webgis/store/selectors';
 
 const Webgis = () => {
-  const [layers, setLayers] = useState<CustomObject<Layer>>({});
+  const layers = useSelector(selectWebgisLayers);
   const [findStation, setFindStation] = useState<boolean>();
   const [isExport, setIsExport] = useState(false);
   const [isImport, setIsImport] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
+  const webgisHandling = useSelector(selectWebgisHandling);
+
+  const dispatch = useDispatch();
+  const { actions } = useWebgisSlice();
 
   const items: MenuProps['items'] = useMemo(() => {
     return [
@@ -59,29 +71,23 @@ const Webgis = () => {
         height: '100vh',
       }}
     >
+      {webgisHandling ? <Waiting /> : null}
       {findStation ? <FindStation onCancel={() => setFindStation(false)} /> : null}
       {isImport ? (
         <ImportLayer
           onCancel={() => setIsImport(false)}
           onUpload={(data) => {
-            setLayers((pre) => ({
-              ...pre,
-              [data.id]: data,
-            }));
+            dispatch(actions.addLayers({ [data.id]: data }));
             setIsImport(false);
           }}
         />
       ) : null}
-      {isExport ? <ExportLayer layers={layers} onCancel={() => setIsExport(false)} /> : null}
+      {isExport ? <ExportLayer onCancel={() => setIsExport(false)} /> : null}
       {isRemove ? (
         <RemoveLayer
           layers={Object.values(layers).map((layer) => ({ id: layer.id, name: layer.name }))}
           onRemoveLayer={(ids) => {
-            const rest = { ...layers };
-            ids.forEach((id) => {
-              delete rest[id];
-            });
-            setLayers(rest);
+            dispatch(actions.removeLayers({ ids }));
             setIsRemove(false);
           }}
           onCancel={() => setIsRemove(false)}
@@ -126,12 +132,7 @@ const Webgis = () => {
           </div>
           <Map
             layers={layers}
-            onAddLayer={(newLayer) =>
-              setLayers((pre) => ({
-                ...pre,
-                [newLayer.id]: newLayer,
-              }))
-            }
+            onAddLayer={(newLayer) => dispatch(actions.addLayers({ [newLayer.id]: newLayer }))}
           />
         </Layout.Content>
       </Layout>

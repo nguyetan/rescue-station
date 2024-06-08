@@ -4,12 +4,12 @@ import { useRef, useState } from 'react';
 import { FeatureGroup, GeoJSON, LayersControl, MapContainer, TileLayer } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 
-import { Layer } from '../../pages/Webgis/type';
+import { CustomLayer } from '../../features/webgis/type';
 import AddLayer from './AddLayer';
 
 type Props = {
-  layers: CustomObject<Layer>;
-  onAddLayer: (layer: Layer) => void;
+  layers: CustomObject<CustomLayer>;
+  onAddLayer: (layer: CustomLayer) => void;
 };
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -48,10 +48,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
         <AddLayer onAddLayer={handleSaveLayer} onCancel={() => setModalVisible(false)} />
       ) : null}
       <MapContainer ref={mapRef} center={[10.877624025081147, 106.77712164784637]} zoom={13}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <div className="leaflet-top leaflet-left" style={{ marginLeft: 220 }}>
           {layerEdit.length ? (
             <Button

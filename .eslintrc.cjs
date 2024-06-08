@@ -6,15 +6,12 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
   ],
-  ignorePatterns: [ '.eslintrc.cjs', 'dist'],
+  ignorePatterns: ['.eslintrc.cjs', 'dist'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', 'simple-import-sort', 'unused-imports'],
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-    'quotes': ['error', 'single'],
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    quotes: ['error', 'single'],
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     'no-unused-vars': 'off',
@@ -22,16 +19,14 @@ module.exports = {
     'unused-imports/no-unused-vars': [
       'error',
       {
-        vars: 'all',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
         argsIgnorePattern: '^_',
       },
     ],
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
   },
-  'parserOptions': {
-    'sourceType': 'module',
-    'ecmaVersion': 'latest'
-  }
+  parserOptions: {
+    sourceType: 'module',
+    ecmaVersion: 'latest',
+  },
 };

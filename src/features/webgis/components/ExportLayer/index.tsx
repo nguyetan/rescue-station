@@ -1,10 +1,10 @@
 import { Button, Form, message, Modal, Radio, Select } from 'antd';
+import { useSelector } from 'react-redux';
 
 import { supportedFiles } from '../../../../libs/options';
-import { Layer } from '../../type';
+import { selectWebgisLayers } from '../../store/selectors';
 type Props = {
   onCancel: () => void;
-  layers: CustomObject<Layer>;
 };
 
 type FormValues = {
@@ -12,7 +12,9 @@ type FormValues = {
   format: 'geojson' | 'csv';
 };
 
-const ExportLayer = ({ layers, onCancel }: Props) => {
+const ExportLayer = ({ onCancel }: Props) => {
+  const layers = useSelector(selectWebgisLayers);
+
   const [form] = Form.useForm<FormValues>();
   const layersOptions = Object.keys(layers).map((key) => ({
     label: layers[key].name,

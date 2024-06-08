@@ -1,13 +1,13 @@
 import { CodeOutlined, FieldTimeOutlined, HddOutlined, IdcardOutlined } from '@ant-design/icons';
 import { Avatar, Col, Row, Typography } from 'antd';
 
-import home_bg_1 from '../../../../../assets/home_bg_1.jpg';
-import home_bg_2 from '../../../../../assets/home_bg_2.jpg';
-import home_bg_3 from '../../../../../assets/home_bg_3.jpg';
-import home_bg_4 from '../../../../../assets/home_bg_4.jpg';
-import logo_des from '../../../../../assets/logo_des.png';
-import { CustomDivider } from '../../../../../components';
-import { font } from '../../../../../libs/theme';
+import home_bg_1 from '../../../../assets/home_bg_1.jpg';
+import home_bg_2 from '../../../../assets/home_bg_2.jpg';
+import home_bg_3 from '../../../../assets/home_bg_3.jpg';
+import home_bg_4 from '../../../../assets/home_bg_4.jpg';
+import logo_des from '../../../../assets/logo_des.png';
+import { CustomDivider } from '../../../../components';
+import { font } from '../../../../libs/theme';
 
 export const DocumentSection = () => {
   return (
@@ -250,7 +250,6 @@ export const DocumentSection = () => {
           style={{
             width: '100%',
             margin: '60px 0px 20px 0px',
-
             display: 'flex',
             justifyContent: 'space-around',
           }}
@@ -395,6 +394,7 @@ export const DocumentSection = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
+              textAlign: 'center',
             }}
           >
             <Typography.Text

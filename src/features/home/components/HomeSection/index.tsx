@@ -1,8 +1,9 @@
+import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button, Col, Row, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import home_bg_1 from '../../../../../assets/home_bg_1.jpg';
-import { font } from '../../../../../libs/theme';
+import home_bg_1 from '../../../../assets/home_bg_1.jpg';
+import { font } from '../../../../libs/theme';
 
 export const HomeSection = () => {
   const navigate = useNavigate();
@@ -52,21 +53,8 @@ export const HomeSection = () => {
             style={{ backgroundColor: '#d3a971', width: 300 }}
             onClick={() => navigate('/webgis')}
           >
-            Dành cho Cán bộ quản lý
-          </Button>
-        </Col>
-        <Col>
-          <Button
-            size="large"
-            style={{
-              backgroundColor: 'transparent',
-              color: 'white',
-              borderWidth: 2,
-              width: 300,
-            }}
-            onClick={() => navigate('/webgis')}
-          >
-            Dành cho công, nhân viên có nhiệm vụ
+            Chuyển tới trang webgis
+            <ArrowRightOutlined />
           </Button>
         </Col>
       </Row>
