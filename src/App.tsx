@@ -11,9 +11,6 @@ import Home from './pages/Home';
 import Webgis from './pages/Webgis';
 
 function App() {
-  // [ 106.78207291024566, 10.751507137698976 ]
-  // console.log(switchEPSG('TEST', 'EPSG4326', [612684.88301200001, 1189162.6647699999]));
-
   return (
     <BrowserRouter
       basename={import.meta.env.REACT_APP_STAGE === 'development' ? '' : '/rescue-station'}
