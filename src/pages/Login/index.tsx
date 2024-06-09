@@ -26,9 +26,9 @@ export const Login = () => {
 
   useEffect(() => {
     if (userAuth) {
-      navigate(location.state.from.pathname || '', { replace: true });
+      navigate(location.state?.from?.pathname || '', { replace: true });
     }
-  }, [location.state.from.pathname, navigate, userAuth]);
+  }, [location, navigate, userAuth]);
 
   const [form] = Form.useForm<{ email: string; pass: string }>();
 
