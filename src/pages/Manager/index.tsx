@@ -1,11 +1,15 @@
 import { FormOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu, Row, Typography } from 'antd';
 import { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import { FeedbackRender, UsersRender } from '../../features/Manager/compoments';
+import { Waiting } from '../../components';
+import { FeedbackRender, UsersRender } from '../../features/manager/compoments';
+import { selectManagerHandling } from '../../features/manager/store/selectors';
 
 const Manager = () => {
   const [activeSection, setActiveSection] = useState('users');
+  const handling = useSelector(selectManagerHandling);
 
   const content = useMemo(() => {
     switch (activeSection) {
@@ -20,6 +24,7 @@ const Manager = () => {
 
   return (
     <Layout style={{ height: '100vh' }}>
+      {handling ? <Waiting /> : null}
       <Layout.Sider>
         <Menu
           mode="inline"
