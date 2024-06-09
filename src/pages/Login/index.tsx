@@ -37,7 +37,7 @@ export const Login = () => {
       const { email, pass } = await form.validateFields();
       signInWithEmailAndPassword(auth, email, pass)
         .then(() => {
-          navigate(location.state.from.pathname || '', { replace: true });
+          navigate(location.state?.from?.pathname || '', { replace: true });
         })
         .catch((error) => {
           if (!error) return;
@@ -55,7 +55,7 @@ export const Login = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then(() => {
-        navigate(location.state.from.pathname || '', { replace: true });
+        navigate(location.state?.from?.pathname || '', { replace: true });
       })
       .catch((error) => {
         if (!error) return;
