@@ -5,7 +5,7 @@ import home_bg_1 from '../../../../assets/home_bg_1.jpg';
 import home_bg_2 from '../../../../assets/home_bg_2.jpg';
 import home_bg_3 from '../../../../assets/home_bg_3.jpg';
 import home_bg_4 from '../../../../assets/home_bg_4.jpg';
-import logo_des from '../../../../assets/logo_des.png';
+import logo from '../../../../assets/logo.png';
 import { CustomDivider } from '../../../../components';
 import { font } from '../../../../libs/theme';
 
@@ -58,6 +58,7 @@ export const DocumentSection = () => {
                 backgroundColor: 'white',
                 padding: '20px',
                 border: '2px solid #d3a971',
+                borderRadius: 12,
               }}
             >
               <Typography.Text style={{ color: 'black' }}>
@@ -65,7 +66,7 @@ export const DocumentSection = () => {
               </Typography.Text>
               <Avatar
                 size={50}
-                src={logo_des}
+                src={logo}
                 style={{ backgroundColor: 'white', margin: '20px 0px' }}
               />
               <Typography.Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}>
@@ -85,6 +86,7 @@ export const DocumentSection = () => {
                 backgroundColor: 'white',
                 padding: '20px',
                 border: '2px solid #d3a971',
+                borderRadius: 12,
               }}
             >
               <Typography.Text style={{ color: 'black' }}>
@@ -93,7 +95,7 @@ export const DocumentSection = () => {
               </Typography.Text>
               <Avatar
                 size={50}
-                src={logo_des}
+                src={logo}
                 style={{ backgroundColor: 'white', margin: '20px 0px' }}
               />
               <Typography.Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}>
@@ -113,6 +115,7 @@ export const DocumentSection = () => {
                 backgroundColor: 'white',
                 padding: '20px',
                 border: '2px solid #d3a971',
+                borderRadius: 12,
               }}
             >
               <Typography.Text style={{ color: 'black' }}>
@@ -121,7 +124,7 @@ export const DocumentSection = () => {
               </Typography.Text>
               <Avatar
                 size={50}
-                src={logo_des}
+                src={logo}
                 style={{ backgroundColor: 'white', margin: '20px 0px' }}
               />
               <Typography.Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}>
@@ -357,36 +360,59 @@ export const DocumentSection = () => {
       >
         <Row gutter={24} style={{ padding: '40px 0px' }} justify="space-around">
           <Col span={7}>
-            <img
-              src={home_bg_1}
-              alt="logo"
-              style={{ width: '100%', height: 350, objectFit: 'cover' }}
-            />
-            <Typography.Text
+            <div
               style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                fontFamily: font.josefinSans,
+                backgroundImage: `url(${home_bg_1})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                height: 350,
+                width: '100%',
+                display: 'flex',
+                alignItems: 'end',
+                justifyContent: 'center',
               }}
             >
-              Demo LSCP
-            </Typography.Text>
+              <Typography.Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  fontFamily: font.josefinSans,
+                  color: 'white',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                  marginBottom: 20,
+                }}
+              >
+                Demo P-Center
+              </Typography.Text>
+            </div>
           </Col>
           <Col span={7}>
-            <img
-              src={home_bg_2}
-              alt="logo"
-              style={{ width: '100%', height: 350, objectFit: 'cover', marginTop: 20 }}
-            />
-            <Typography.Text
+            <div
               style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                fontFamily: font.josefinSans,
+                backgroundImage: `url(${home_bg_2})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                height: 350,
+                width: '100%',
+                display: 'flex',
+                alignItems: 'end',
+                justifyContent: 'center',
+                marginTop: 20,
               }}
             >
-              Demo LSCP
-            </Typography.Text>
+              <Typography.Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  fontFamily: font.josefinSans,
+                  color: 'white',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                  marginBottom: 20,
+                }}
+              >
+                Demo LSCP
+              </Typography.Text>
+            </div>
           </Col>
           <Col
             span={7}

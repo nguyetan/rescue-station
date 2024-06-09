@@ -1,14 +1,59 @@
 import { FacebookOutlined, GithubOutlined, HomeOutlined, MailOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Row, Typography } from 'antd';
+import { Button, Col, Form, Input, notification, Row, Typography } from 'antd';
+import { useState } from 'react';
 
 import home_bg_4 from '../../../../assets/home_bg_3.jpg';
 import logo from '../../../../assets/logo.png';
 import logo_des from '../../../../assets/logo_des.png';
+import { Waiting } from '../../../../components';
 import { font } from '../../../../libs/theme';
+import { backendService } from '../../../../services';
+
+type FormValues = {
+  name: string;
+  email: string;
+  phone: string;
+  content: string;
+};
 
 export const ContactSection = () => {
+  const [form] = Form.useForm<FormValues>();
+  const [sending, setSending] = useState(false);
+
+  const handleSendFeedback = async () => {
+    try {
+      setSending(true);
+      const values = await form.validateFields();
+
+      const dataUpload = {
+        action: 'add',
+        data: {
+          ...values,
+          time: new Date().valueOf(),
+        },
+      };
+
+      const result = await backendService.post('/feedback', dataUpload);
+      if (result.kind === 'ok') {
+        form.resetFields();
+        notification.success({
+          message: 'Gửi phản hồi thành công',
+          description: 'Cảm ơn bạn đã góp ý, chúng tôi sẽ phản hồi sớm nhất có thể',
+        });
+      } else {
+        notification.error({
+          message: 'Gửi phản hồi thất bại',
+          description: 'Vui lòng thử lại sau',
+        });
+      }
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
     <>
+      {sending ? <Waiting /> : null}
       <div>
         <Row
           gutter={24}
@@ -240,21 +285,44 @@ export const ContactSection = () => {
               <br />
               "Lắng nghe đóng góp của bạn"
             </Typography.Text>
-            <Form layout="vertical">
-              <Form.Item label={<div style={{ color: 'white' }}>Họ và tên</div>} required>
+            <Form layout="vertical" form={form}>
+              <Form.Item
+                label={<div style={{ color: 'white' }}>Họ và tên</div>}
+                required
+                name="name"
+                rules={[{ required: true, message: 'Vui lòng điền họ và tên' }]}
+              >
                 <Input placeholder="Điền họ và tên" />
               </Form.Item>
-              <Form.Item label={<div style={{ color: 'white' }}>Email</div>} required>
+              <Form.Item
+                label={<div style={{ color: 'white' }}>Email</div>}
+                required
+                name="email"
+                rules={[{ required: true, message: 'Vui lòng điền email' }]}
+              >
                 <Input placeholder="Điền email" />
               </Form.Item>
-              <Form.Item label={<div style={{ color: 'white' }}>Số điện thoại</div>} required>
+              <Form.Item
+                label={<div style={{ color: 'white' }}>Số điện thoại</div>}
+                required
+                name="phone"
+                rules={[{ required: true, message: 'Vui lòng điền số điện thoại' }]}
+              >
                 <Input placeholder="Điền số điện thoại" />
               </Form.Item>
-              <Form.Item label={<div style={{ color: 'white' }}>Nội dung</div>} required>
+              <Form.Item
+                label={<div style={{ color: 'white' }}>Nội dung</div>}
+                required
+                name="content"
+                rules={[{ required: true, message: 'Vui lòng điền nội dung' }]}
+              >
                 <Input.TextArea placeholder="Điền nội dung" />
               </Form.Item>
               <Form.Item>
-                <Button style={{ width: '100%', backgroundColor: 'transparent', color: 'white' }}>
+                <Button
+                  style={{ width: '100%', backgroundColor: 'transparent', color: 'white' }}
+                  onClick={handleSendFeedback}
+                >
                   Gửi về hòm thư
                 </Button>
               </Form.Item>

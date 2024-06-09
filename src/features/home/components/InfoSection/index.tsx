@@ -161,40 +161,46 @@ export const InfoSection = () => {
                 padding: '20px',
               }}
             >
-              <div>
-                <Typography.Text style={{ fontWeight: 'bold' }}>
-                  Cảnh sát Phòng cháy chữa cháy và Cứu nạn, cứu hộ (PCCC&CNCH)
+              <div style={{ height: 85 }}>
+                <div>
+                  <Typography.Text style={{ fontWeight: 'bold' }}>
+                    Cảnh sát Phòng cháy chữa cháy và Cứu nạn, cứu hộ (PCCC&CNCH)
+                  </Typography.Text>
+                </div>
+                <Typography.Text style={{ whiteSpace: 'pre-line' }}>
+                  Các tổ chức, cá nhân gọi điện thoại báo tin khẩn cấp khi có sự cố cháy, nổ, tai
+                  nạn xảy ra. {'\n'}Tổng đài: 114
                 </Typography.Text>
               </div>
-              <Typography.Text style={{ whiteSpace: 'pre-line' }}>
-                Các tổ chức, cá nhân gọi điện thoại báo tin khẩn cấp khi có sự cố cháy, nổ, tai nạn
-                xảy ra. {'\n'}Tổng đài: 114
-              </Typography.Text>
               <div style={{ width: '85%' }}>
                 <CustomDivider dashed />
               </div>
-              <div>
-                <Typography.Text style={{ fontWeight: 'bold' }}>
-                  Trạm cứu hộ, hỗ trợ y tế
+              <div style={{ height: 85, marginTop: 5 }}>
+                <div>
+                  <Typography.Text style={{ fontWeight: 'bold' }}>
+                    Trạm cứu hộ, hỗ trợ y tế
+                  </Typography.Text>
+                </div>
+                <Typography.Text style={{ whiteSpace: 'pre-line' }}>
+                  Các tổ chức, cá nhân gọi điện thoại khi cần hỗ trợ tranng thiết bị, vật tư y tế
+                  {'\n'}
+                  Tổng đài: [đang cập nhật]
                 </Typography.Text>
               </div>
-              <Typography.Text style={{ whiteSpace: 'pre-line' }}>
-                Các tổ chức, cá nhân gọi điện thoại khi cần hỗ trợ tranng thiết bị, vật tư y tế
-                {'\n'}
-                Tổng đài: [đang cập nhật]
-              </Typography.Text>
               <div style={{ width: '85%' }}>
                 <CustomDivider dashed />
               </div>
-              <div>
-                <Typography.Text style={{ fontWeight: 'bold' }}>
-                  Các doanh nghiệp du lịch
+              <div style={{ height: 70, marginTop: 5 }}>
+                <div>
+                  <Typography.Text style={{ fontWeight: 'bold' }}>
+                    Các doanh nghiệp du lịch
+                  </Typography.Text>
+                </div>
+                <Typography.Text>
+                  Liên lạc đến số hotline của các doanh nghiệp mà bạn đang sử dụng dịch vụ khi có
+                  thắc mắc.
                 </Typography.Text>
               </div>
-              <Typography.Text>
-                Liên lạc đến số hotline của các doanh nghiệp mà bạn đang sử dụng dịch vụ khi có thắc
-                mắc.
-              </Typography.Text>
             </div>
           </Col>
           <Col span={10}>
@@ -224,32 +230,42 @@ export const InfoSection = () => {
                 padding: 20,
               }}
             >
-              <div>
-                <Typography.Text style={{ fontWeight: 'bold' }}>Các tàu chở khách</Typography.Text>
-              </div>
-              <Typography.Text>
-                Đảm bảo đã có các phương thức liên lạc khẩn cấp, phòng trường hợp có sự cố xảy ra.
-              </Typography.Text>
-              <div style={{ width: '85%' }}>
-                <CustomDivider dashed />
-              </div>
-              <div>
-                <Typography.Text style={{ fontWeight: 'bold' }}>Các tàu vận chuyển</Typography.Text>
-              </div>
-              <Typography.Text>
-                Đảm bảo đã có các phương thức liên lạc khẩn cấp, phòng khi có sự cố xảy ra.
-              </Typography.Text>
-              <div style={{ width: '85%' }}>
-                <CustomDivider dashed />
-              </div>
-              <div>
-                <Typography.Text style={{ fontWeight: 'bold' }}>
-                  Du khách tham gia các tuyến du lịch đường thuỷ
+              <div style={{ height: 85 }}>
+                <div>
+                  <Typography.Text style={{ fontWeight: 'bold' }}>
+                    Các tàu chở khách
+                  </Typography.Text>
+                </div>
+                <Typography.Text>
+                  Đảm bảo đã có các phương thức liên lạc khẩn cấp, phòng trường hợp có sự cố xảy ra.
                 </Typography.Text>
               </div>
-              <Typography.Text>
-                Đảm bảo đã chuẩn bị đầy đủ các phương thức liên lạc, phòng khi có sự cố xảy ra.
-              </Typography.Text>
+              <div style={{ width: '85%' }}>
+                <CustomDivider dashed />
+              </div>
+              <div style={{ height: 85, marginTop: 5 }}>
+                <div>
+                  <Typography.Text style={{ fontWeight: 'bold' }}>
+                    Các tàu vận chuyển
+                  </Typography.Text>
+                </div>
+                <Typography.Text>
+                  Đảm bảo đã có các phương thức liên lạc khẩn cấp, phòng khi có sự cố xảy ra.
+                </Typography.Text>
+              </div>
+              <div style={{ width: '85%' }}>
+                <CustomDivider dashed />
+              </div>
+              <div style={{ height: 70, marginTop: 5 }}>
+                <div>
+                  <Typography.Text style={{ fontWeight: 'bold' }}>
+                    Du khách tham gia các tuyến du lịch đường thuỷ
+                  </Typography.Text>
+                </div>
+                <Typography.Text>
+                  Đảm bảo đã chuẩn bị đầy đủ các phương thức liên lạc, phòng khi có sự cố xảy ra.
+                </Typography.Text>
+              </div>
             </div>
           </Col>
         </Row>
