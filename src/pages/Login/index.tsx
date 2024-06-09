@@ -6,16 +6,29 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import home_bg_1 from '../../assets/home_bg_1.jpg';
 import logo_des from '../../assets/logo_des.png';
+import { Waiting } from '../../components';
+import { selectUserAuthenticated, selectUserHandling } from '../../features/user/store/selectors';
 
 export const Login = () => {
   const auth = getAuth();
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const userAuth = useSelector(selectUserAuthenticated);
+  const userHandling = useSelector(selectUserHandling);
+
+  useEffect(() => {
+    if (userAuth) {
+      navigate(location.state.from.pathname || '', { replace: true });
+    }
+  }, [location.state.from.pathname, navigate, userAuth]);
 
   const [form] = Form.useForm<{ email: string; pass: string }>();
 
@@ -55,6 +68,7 @@ export const Login = () => {
 
   return (
     <Layout>
+      {userHandling ? <Waiting /> : null}
       <Layout.Content
         style={{
           display: 'flex',
