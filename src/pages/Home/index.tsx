@@ -39,8 +39,6 @@ const Home = () => {
     return user! || {};
   }, [user]);
 
-  console.log('user', user);
-
   return (
     <Layout>
       {userHandling ? <Waiting /> : null}

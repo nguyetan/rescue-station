@@ -1,5 +1,5 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Col, Row, Space, Table, TableColumnsType, Typography } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+import { Col, Modal, Row, Space, Table, TableColumnsType, Typography } from 'antd';
 import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,8 @@ export const FeedbackRender = () => {
     if (!Object.keys(feedbacks).length) {
       dispatch(actions.getFeedbacks());
     }
-  }, [feedbacks, dispatch, actions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, actions]);
 
   const cols: TableColumnsType<Feedback> = useMemo(() => {
     const tmp: TableColumnsType<Feedback> = [
@@ -62,18 +63,25 @@ export const FeedbackRender = () => {
       },
       {
         width: 100,
-        render: (_any) => (
+        render: (_any, record) => (
           <Space size="middle">
-            <EditOutlined
-              style={{
-                fontSize: 20,
-                color: '#1890ff',
-              }}
-            />
             <DeleteOutlined
               style={{
                 fontSize: 20,
                 color: '#ff4d4f',
+              }}
+              onClick={() => {
+                Modal.confirm({
+                  title: 'Xác nhận xóa',
+                  content: 'Bạn có chắc chắn muốn xóa phản hồi này?',
+                  onOk: () => {
+                    dispatch(
+                      actions.deleteFeedback({
+                        id: record.id,
+                      })
+                    );
+                  },
+                });
               }}
             />
           </Space>
@@ -81,7 +89,7 @@ export const FeedbackRender = () => {
       },
     ];
     return tmp;
-  }, []);
+  }, [actions, dispatch]);
 
   return (
     <div

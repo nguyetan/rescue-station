@@ -24,3 +24,20 @@ export type FindedPoint = {
   XX: number;
   YY: number;
 };
+
+export type Feature = {
+  type: string;
+  properties: {
+    name: string;
+    color: string;
+  };
+  geometry: {
+    type: string;
+    coordinates: number[];
+  };
+};
+
+export type GeoJson = {
+  type: string;
+  features: Feature[];
+};

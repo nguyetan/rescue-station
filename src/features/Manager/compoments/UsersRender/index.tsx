@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Row, Space, Table, TableColumnsType } from 'antd';
+import { Button, Modal, Row, Space, Table, TableColumnsType } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -20,7 +20,8 @@ export const UsersRender = () => {
     if (!Object.keys(users).length) {
       dispatch(actions.getUsers());
     }
-  }, [users, dispatch, actions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, actions]);
 
   const cols: TableColumnsType<User> = useMemo(() => {
     const tmp: TableColumnsType<User> = [
@@ -57,13 +58,27 @@ export const UsersRender = () => {
                 fontSize: 20,
                 color: '#ff4d4f',
               }}
+              onClick={() => {
+                Modal.confirm({
+                  title: 'Xác nhận xóa',
+                  content: 'Bạn có chắc chắn muốn xóa người dùng này?',
+                  onOk: () => {
+                    dispatch(
+                      actions.updateUsers({
+                        action: 'delete',
+                        data: record,
+                      })
+                    );
+                  },
+                });
+              }}
             />
           </Space>
         ),
       },
     ];
     return tmp;
-  }, []);
+  }, [actions, dispatch]);
 
   return (
     <div
@@ -73,7 +88,7 @@ export const UsersRender = () => {
     >
       {edit ? <UserEditor user={edit} onCancel={() => setEdit(undefined)} /> : null}
       <Row justify="end" style={{ marginBottom: 10 }}>
-        {/* <Button
+        <Button
           type="primary"
           style={{
             backgroundColor: '#d3a971',
@@ -81,7 +96,7 @@ export const UsersRender = () => {
           onClick={() => setEdit({} as User)}
         >
           Thêm người dùng
-        </Button> */}
+        </Button>
       </Row>
       <Table pagination={false} dataSource={Object.values(users)} columns={cols} />
     </div>

@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { notification } from 'antd';
-import { User as UserAuth } from 'firebase/auth';
+import { getAuth, signOut, User as UserAuth } from 'firebase/auth';
 import { all, put, takeLatest } from 'redux-saga/effects';
 
 import { backendService } from '../../../services';
@@ -34,7 +34,15 @@ function* signIn(action: PayloadAction<UserAuth>) {
         })
       );
     } else {
-      notification.error({ message: 'Lỗi truy vấn', description: formatError(result) });
+      if (result.kind === 'rejected') {
+        notification.info({
+          message: 'Thông báo',
+          description: 'Bạn chưa được cấp quyền truy cập. Vui lòng liên hệ quản trị viên',
+        });
+      } else {
+        notification.error({ message: 'Lỗi truy vấn', description: formatError(result) });
+      }
+      signOut(getAuth());
       yield put(
         userAction.fetch({
           auth: false,
@@ -43,6 +51,7 @@ function* signIn(action: PayloadAction<UserAuth>) {
     }
   } catch ({ message }: any) {
     notification.error({ message: 'Lỗi truy vấn', description: message });
+    signOut(getAuth());
     yield put(
       userAction.fetch({
         auth: false,

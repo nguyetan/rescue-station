@@ -1,7 +1,6 @@
 import './index.css';
 import './services/firebase.ts';
 
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
@@ -11,8 +10,6 @@ const store = configureAppStore();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </Provider>
 );

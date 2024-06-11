@@ -63,7 +63,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
               className="leaflet-control"
               onClick={() => setModalVisible(true)}
             >
-              LÆ°u layer
+              Lưu layer
             </Button>
           ) : null}
         </div>

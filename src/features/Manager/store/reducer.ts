@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 import { createSlice } from '../../../redux/toolkit';
 import { User } from '../../user/type';
-import { Feedback, ManagerSate } from '../type';
+import { Feedback, ManagerSate, UpdateUsersAction } from '../type';
 
 export const initialState: ManagerSate = {
   handling: false,
@@ -27,6 +27,16 @@ const slice = createSlice({
     },
     getFeedbacks: (state) => {
       state.handling = true;
+    },
+
+    updateUsers: (state, _action: PayloadAction<UpdateUsersAction>) => {
+      state.handling = true;
+    },
+    deleteFeedback: (state, _action: PayloadAction<{ id: string }>) => {
+      state.handling = true;
+    },
+    cancelHandling: (state) => {
+      state.handling = false;
     },
   },
 });
