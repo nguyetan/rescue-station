@@ -16,6 +16,8 @@ export type FindStationType = {
 export type WebgisState = {
   handling: boolean;
   layers: CustomObject<CustomLayer>;
+  stations: CustomObject<FindedPoint[]>;
+  center: number[];
 };
 
 export type FindedPoint = {

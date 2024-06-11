@@ -1,11 +1,15 @@
 import { Button } from 'antd';
 import L from 'leaflet';
-import { useRef, useState } from 'react';
+import _ from 'lodash';
+import { useEffect, useRef, useState } from 'react';
 import {
   FeatureGroup,
   GeoJSON,
+  LayerGroup,
   LayersControl,
   MapContainer,
+  Marker,
+  Popup,
   TileLayer,
   WMSTileLayer,
 } from 'react-leaflet';
@@ -13,7 +17,12 @@ import { EditControl } from 'react-leaflet-draw';
 import { useSelector } from 'react-redux';
 
 import { selectUserAuthenticated } from '../../features/user/store/selectors';
+import {
+  selectWebgisCenter,
+  selectWebgisStationsFinded,
+} from '../../features/webgis/store/selectors';
 import { CustomLayer } from '../../features/webgis/type';
+import { switchEPSG } from '../../libs/utils';
 import AddLayer from './AddLayer';
 
 type Props = {
@@ -34,6 +43,14 @@ const Map = ({ layers, onAddLayer }: Props) => {
   const [layerEdit, setLayerEdit] = useState<string[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const userAuth = useSelector(selectUserAuthenticated);
+  const stationFinded = useSelector(selectWebgisStationsFinded);
+  const center = useSelector(selectWebgisCenter);
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.flyTo(center as [number, number]);
+    }
+  }, [center]);
 
   const handleSaveLayer = (info: { name: string; color: string; id: string }) => {
     const data: any = {};
@@ -57,7 +74,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
       {modalVisible ? (
         <AddLayer onAddLayer={handleSaveLayer} onCancel={() => setModalVisible(false)} />
       ) : null}
-      <MapContainer ref={mapRef} center={[10.877624025081147, 106.77712164784637]} zoom={13}>
+      <MapContainer ref={mapRef} center={center as [number, number]} zoom={13}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <div className="leaflet-top leaflet-left" style={{ marginLeft: 220 }}>
           {layerEdit.length ? (
@@ -104,6 +121,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
               transparent={true}
             />
           </LayersControl.Overlay>
+
           {Object.values(layers).map((layer) => (
             <LayersControl.Overlay name={layer.name} key={layer.name} checked>
               <GeoJSON
@@ -124,6 +142,40 @@ const Map = ({ layers, onAddLayer }: Props) => {
                     : undefined
                 }
               />
+            </LayersControl.Overlay>
+          ))}
+
+          {Object.entries(stationFinded).map(([type, data]) => (
+            <LayersControl.Overlay name={`Tìm kiếm bằng ${_.toUpper(type)}`} key={type} checked>
+              <LayerGroup>
+                {data.map((station) => (
+                  <Marker
+                    position={
+                      switchEPSG('VN2000_HCM', 'EPSG4326', [station.XX, station.YY]).reverse() as [
+                        number,
+                        number
+                      ]
+                    }
+                  >
+                    <Popup>
+                      <div>
+                        <div>
+                          <b>Id:</b> {station.Id}
+                        </div>
+                        <div>
+                          <b>FacilityPoints:</b> {station.FacilityPoints}
+                        </div>
+                        <div>
+                          <b>XX:</b> {station.XX}
+                        </div>
+                        <div>
+                          <b>YY:</b> {station.YY}
+                        </div>
+                      </div>
+                    </Popup>
+                  </Marker>
+                ))}
+              </LayerGroup>
             </LayersControl.Overlay>
           ))}
         </LayersControl>

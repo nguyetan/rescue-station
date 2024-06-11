@@ -8,7 +8,7 @@ export const switchEPSG = (
   current: keyof EPSGValuesType,
   target: keyof EPSGValuesType,
   coordinate: number[]
-) => {
+): number[] => {
   const convert = proj4(EPSGValues[current], EPSGValues[target]);
   return convert.forward(coordinate);
 };

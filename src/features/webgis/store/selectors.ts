@@ -6,3 +6,7 @@ const selectDomain = (state: RootState) => state?.webgisStore || initialState;
 export const selectWebgisHandling = (state: RootState) => selectDomain(state).handling;
 
 export const selectWebgisLayers = (state: RootState) => selectDomain(state).layers;
+
+export const selectWebgisStationsFinded = (state: RootState) => selectDomain(state).stations;
+
+export const selectWebgisCenter = (state: RootState) => selectDomain(state).center;
