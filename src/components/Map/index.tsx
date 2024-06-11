@@ -10,7 +10,9 @@ import {
   WMSTileLayer,
 } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
+import { useSelector } from 'react-redux';
 
+import { selectUserAuthenticated } from '../../features/user/store/selectors';
 import { CustomLayer } from '../../features/webgis/type';
 import AddLayer from './AddLayer';
 
@@ -31,6 +33,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
   const mapRef = useRef<any>();
   const [layerEdit, setLayerEdit] = useState<string[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const userAuth = useSelector(selectUserAuthenticated);
 
   const handleSaveLayer = (info: { name: string; color: string; id: string }) => {
     const data: any = {};
@@ -124,23 +127,26 @@ const Map = ({ layers, onAddLayer }: Props) => {
             </LayersControl.Overlay>
           ))}
         </LayersControl>
-        <FeatureGroup>
-          <EditControl
-            position="topright"
-            draw={{
-              rectangle: false,
-              circle: false,
-              circlemarker: false,
-            }}
-            onCreated={(e) => {
-              setLayerEdit((pre) => [...pre, `${e.layer._leaflet_id}`]);
-            }}
-            onDeleted={(e) => {
-              const ids = Object.keys(e.layers._layers);
-              setLayerEdit((pre) => pre.filter((id) => !ids.includes(id)));
-            }}
-          />
-        </FeatureGroup>
+
+        {userAuth ? (
+          <FeatureGroup>
+            <EditControl
+              position="topright"
+              draw={{
+                rectangle: false,
+                circle: false,
+                circlemarker: false,
+              }}
+              onCreated={(e) => {
+                setLayerEdit((pre) => [...pre, `${e.layer._leaflet_id}`]);
+              }}
+              onDeleted={(e) => {
+                const ids = Object.keys(e.layers._layers);
+                setLayerEdit((pre) => pre.filter((id) => !ids.includes(id)));
+              }}
+            />
+          </FeatureGroup>
+        ) : null}
       </MapContainer>
     </div>
   );

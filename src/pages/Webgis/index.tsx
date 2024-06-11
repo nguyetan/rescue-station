@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import { Map, Waiting } from '../../components';
+import { selectUserAuthenticated } from '../../features/user/store/selectors';
 import {
   ExportLayer,
   FindStation,
@@ -28,12 +29,13 @@ const Webgis = () => {
   const [isImport, setIsImport] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
   const webgisHandling = useSelector(selectWebgisHandling);
+  const auth = useSelector(selectUserAuthenticated);
 
   const dispatch = useDispatch();
   const { actions } = useWebgisSlice();
 
   const items: MenuProps['items'] = useMemo(() => {
-    return [
+    const tmp: MenuProps['items'] = [
       {
         icon: <SearchOutlined />,
         key: 'find-station',
@@ -44,23 +46,28 @@ const Webgis = () => {
         key: 'view-station',
         label: 'Xem trạm cứu hộ',
       },
-      {
-        icon: <FileAddOutlined />,
-        key: 'add-layer',
-        label: 'Thêm layer',
-      },
-      {
-        icon: <DeleteOutlined />,
-        key: 'remove-layer',
-        label: 'Xóa layer',
-      },
-      {
-        icon: <FileTextOutlined />,
-        key: 'export-layer',
-        label: 'Xuất layer',
-      },
     ];
-  }, []);
+    if (auth) {
+      tmp.push(
+        {
+          icon: <FileAddOutlined />,
+          key: 'add-layer',
+          label: 'Thêm layer',
+        },
+        {
+          icon: <DeleteOutlined />,
+          key: 'remove-layer',
+          label: 'Xóa layer',
+        },
+        {
+          icon: <FileTextOutlined />,
+          key: 'export-layer',
+          label: 'Xuất layer',
+        }
+      );
+    }
+    return tmp;
+  }, [auth]);
 
   return (
     <Layout
