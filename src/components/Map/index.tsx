@@ -1,7 +1,14 @@
 import { Button } from 'antd';
 import L from 'leaflet';
 import { useRef, useState } from 'react';
-import { FeatureGroup, GeoJSON, LayersControl, MapContainer, TileLayer } from 'react-leaflet';
+import {
+  FeatureGroup,
+  GeoJSON,
+  LayersControl,
+  MapContainer,
+  TileLayer,
+  WMSTileLayer,
+} from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 
 import { CustomLayer } from '../../features/webgis/type';
@@ -56,12 +63,44 @@ const Map = ({ layers, onAddLayer }: Props) => {
               className="leaflet-control"
               onClick={() => setModalVisible(true)}
             >
-              Lưu layer
+              LÆ°u layer
             </Button>
           ) : null}
         </div>
 
         <LayersControl position="topright">
+          <LayersControl.Overlay name="Điểm ven Thuỷ hệ">
+            <WMSTileLayer
+              url="http://localhost:8082/geoserver/test/wms"
+              layers="test:thuyhe_diemven2_84"
+              format="image/png"
+              transparent={true}
+            />
+          </LayersControl.Overlay>
+          <LayersControl.Overlay name="Một phần thuỷ hệ">
+            <WMSTileLayer
+              url="http://localhost:8082/geoserver/test/wms"
+              layers="test:thuyhe_hcm_motphan_dissolve_84"
+              format="image/png"
+              transparent={true}
+            />
+          </LayersControl.Overlay>
+          <LayersControl.Overlay name="Một phần đoạn sông">
+            <WMSTileLayer
+              url="http://localhost:8082/geoserver/test/wms"
+              layers="test:thuyhe_hcm_motphan_dissolve_line5_84"
+              format="image/png"
+              transparent={true}
+            />
+          </LayersControl.Overlay>
+          <LayersControl.Overlay name="Thành phố Thủ Đức">
+            <WMSTileLayer
+              url="http://localhost:8082/geoserver/test/wms"
+              layers="	test:tpthuduc_84"
+              format="image/png"
+              transparent={true}
+            />
+          </LayersControl.Overlay>
           {Object.values(layers).map((layer) => (
             <LayersControl.Overlay name={layer.name} key={layer.name} checked>
               <GeoJSON
