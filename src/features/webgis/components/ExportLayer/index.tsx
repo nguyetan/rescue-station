@@ -48,7 +48,7 @@ const ExportLayer = ({ onCancel }: Props) => {
           const csv = Papa.unparse(findStations[layer]);
           const blob = new Blob([csv], { type: 'text/csv' });
           url = URL.createObjectURL(blob);
-          name = `timkiem_${layer}_${moment().format('DD/MM/YYYY')}.csv`;
+          name = `timkiem_${layer}_${moment().format('DDMMYYYY')}.csv`;
         } else {
           const rows = _.flatten(
             data.geoJson.features.map((feature: Feature) =>

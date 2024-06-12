@@ -1,11 +1,6 @@
 import { GoogleOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Layout, notification, Typography } from 'antd';
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from 'firebase/auth';
+import { Button, Layout, notification } from 'antd';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -30,26 +25,26 @@ export const Login = () => {
     }
   }, [location, navigate, userAuth]);
 
-  const [form] = Form.useForm<{ email: string; pass: string }>();
+  // const [form] = Form.useForm<{ email: string; pass: string }>();
 
-  const loginEmail = async () => {
-    try {
-      const { email, pass } = await form.validateFields();
-      signInWithEmailAndPassword(auth, email, pass)
-        .then(() => {
-          navigate(location.state?.from?.pathname || '/', { replace: true });
-        })
-        .catch((error) => {
-          if (!error) return;
-          notification.error({
-            message: 'Đăng nhập thất bại',
-            description: error.message,
-          });
-        });
-    } finally {
-      /* empty */
-    }
-  };
+  // const loginEmail = async () => {
+  //   try {
+  //     const { email, pass } = await form.validateFields();
+  //     signInWithEmailAndPassword(auth, email, pass)
+  //       .then(() => {
+  //         navigate(location.state?.from?.pathname || '/', { replace: true });
+  //       })
+  //       .catch((error) => {
+  //         if (!error) return;
+  //         notification.error({
+  //           message: 'Đăng nhập thất bại',
+  //           description: error.message,
+  //         });
+  //       });
+  //   } finally {
+  //     /* empty */
+  //   }
+  // };
 
   const loginGoogle = () => {
     const provider = new GoogleAuthProvider();
@@ -89,7 +84,7 @@ export const Login = () => {
           }}
         >
           <img src={logo_des} alt="logo" style={{ height: 100 }} />
-          <Form form={form} layout="vertical" style={{ width: 220 }}>
+          {/* <Form form={form} layout="vertical" style={{ width: 220 }}>
             <Form.Item
               name="email"
               rules={[
@@ -125,7 +120,7 @@ export const Login = () => {
             >
               Quên mật khẩu
             </Typography.Link>
-          </div>
+          </div> */}
           <div
             style={{
               top: -10,
@@ -134,15 +129,21 @@ export const Login = () => {
               textAlign: 'center',
             }}
           >
-            <Button
+            <div style={{ padding: '10px 10px', maxWidth: 240 }}>
+              Tìm kiếm các trạm cứu hộ gần bạn, hỗ trợ cứu hộ, cung cấp vật tư y tế khẩn cấp
+            </div>
+
+            {/* <Button
               style={{ width: 220, backgroundColor: '#d3a971' }}
               size="large"
               type="primary"
               onClick={loginEmail}
             >
               Đăng nhập
-            </Button>
-            <div style={{ padding: '10px 10px' }}>hoặc đăng nhập bằng</div>
+          </Button>*/}
+            <div style={{ padding: '10px 10px', maxWidth: 240, fontWeight: 'bold' }}>
+              Đăng nhập bằng
+            </div>
             <Button
               type="primary"
               style={{ width: 220, backgroundColor: '#db4437' }}
