@@ -38,10 +38,18 @@ const slice = createSlice({
         [action.payload.type]: action.payload.data,
       };
     },
+    removeStationFinded(state, action: PayloadAction<{ ids: string[] }>) {
+      const { ids } = action.payload;
+      state.handling = false;
+      ids.forEach((id) => {
+        delete state.stations[id];
+      });
+    },
     changeFocusCenter(state, action: PayloadAction<{ center: number[] }>) {
       state.handling = false;
       state.center = action.payload.center;
     },
+    clear: () => initialState,
   },
 });
 

@@ -1,4 +1,8 @@
 import { Button, Form, Modal, Select } from 'antd';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+
+import { selectWebgisStationsFinded } from '../../store/selectors';
 
 type Props = {
   layers: { name: string; id: string }[];
@@ -8,6 +12,21 @@ type Props = {
 
 const RemoveLayer = ({ onCancel, onRemoveLayer, layers }: Props) => {
   const [form] = Form.useForm<{ ids: string[] }>();
+  const findStations = useSelector(selectWebgisStationsFinded);
+
+  const layersOptions = useMemo(() => {
+    const options = layers.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
+    Object.keys(findStations).forEach((key) => {
+      options.push({
+        label: `Tìm kiếm bằng ${key}`,
+        value: key,
+      });
+    });
+    return options;
+  }, [findStations, layers]);
 
   const handleRemoveLayer = async () => {
     try {
@@ -34,13 +53,7 @@ const RemoveLayer = ({ onCancel, onRemoveLayer, layers }: Props) => {
     >
       <Form form={form} layout="vertical">
         <Form.Item name={'ids'}>
-          <Select
-            mode="multiple"
-            options={layers.map(({ name, id }) => ({
-              label: name,
-              value: id,
-            }))}
-          />
+          <Select mode="multiple" options={layersOptions} />
         </Form.Item>
       </Form>
     </Modal>

@@ -5,6 +5,7 @@ import { all, put, takeLatest } from 'redux-saga/effects';
 
 import { backendService } from '../../../services';
 import formatError from '../../../utils/formatError';
+import { actions as webgisActions } from '../../webgis/store/reducer';
 import { User } from '../type';
 import { actions as userAction } from './reducer';
 
@@ -60,6 +61,17 @@ function* signIn(action: PayloadAction<UserAuth>) {
   }
 }
 
+function* signOutHandle() {
+  try {
+    yield put(webgisActions.clear());
+  } catch (error: any) {
+    notification.error({ message: 'Lỗi truy vấn', description: error.message });
+  }
+}
+
 export default function* saga() {
-  yield all([takeLatest(userAction.signIn.type, signIn)]);
+  yield all([
+    takeLatest(userAction.signIn.type, signIn),
+    takeLatest(userAction.signOut.type, signOutHandle),
+  ]);
 }

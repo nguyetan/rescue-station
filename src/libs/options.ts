@@ -6,6 +6,7 @@ export const findStationOptions = {
 };
 
 export const supportedFiles = {
+  csv: 'CSV',
   geojson: 'GeoJSON',
   shp: 'Shapefile',
 };

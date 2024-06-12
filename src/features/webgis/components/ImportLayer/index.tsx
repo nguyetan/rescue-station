@@ -35,7 +35,9 @@ const ImportLayer = ({ onUpload, onCancel }: Props) => {
       const geoJson = await convertFileToGeoJson(importType, file);
 
       onUpload({ geoJson, color: `#${color.toHex()}`, name, id: nanoid(), converPoint: true });
-    } catch {}
+    } catch (error: any) {
+      message.error(error.message);
+    }
   };
 
   return (

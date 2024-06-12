@@ -94,7 +94,21 @@ const Webgis = () => {
         <RemoveLayer
           layers={Object.values(layers).map((layer) => ({ id: layer.id, name: layer.name }))}
           onRemoveLayer={(ids) => {
-            dispatch(actions.removeLayers({ ids }));
+            const layerKey: string[] = [];
+            const stationKey: string[] = [];
+            ids.forEach((id) => {
+              if (layers[id]) {
+                layerKey.push(id);
+              } else {
+                stationKey.push(id);
+              }
+            });
+            if (stationKey.length) {
+              dispatch(actions.removeStationFinded({ ids: stationKey }));
+            }
+            if (layerKey.length) {
+              dispatch(actions.removeLayers({ ids: layerKey }));
+            }
             setIsRemove(false);
           }}
           onCancel={() => setIsRemove(false)}

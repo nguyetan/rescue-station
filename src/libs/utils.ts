@@ -33,6 +33,6 @@ export const convertFileToGeoJson = async (type: ImportSupportedType, file: File
       return geoJson;
     }
     default:
-      throw new Error('Unsupported file type');
+      throw new Error('Chưa hỗ trợ định dạng này');
   }
 };

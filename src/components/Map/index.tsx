@@ -75,7 +75,11 @@ const Map = ({ layers, onAddLayer }: Props) => {
         <AddLayer onAddLayer={handleSaveLayer} onCancel={() => setModalVisible(false)} />
       ) : null}
       <MapContainer ref={mapRef} center={center as [number, number]} zoom={13}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer
+          url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+          subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+          maxZoom={20}
+        />
         <div className="leaflet-top leaflet-left" style={{ marginLeft: 220 }}>
           {layerEdit.length ? (
             <Button
