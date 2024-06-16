@@ -201,7 +201,7 @@ export const DocumentSection = () => {
                 whiteSpace: 'pre-line',
               }}
             >
-              Duy trì hiệu suất ổn định và không bị gián đoạn.{'\n'}Cải thiện trải nghiệm người dùng
+              Duy trì hiệu suất ổn định và không bị gián đoạn. Cải thiện trải nghiệm người dùng
               ngay cả khi có nhiều lượt truy cập cùng lúc
             </Typography.Text>
           </Col>
@@ -223,7 +223,7 @@ export const DocumentSection = () => {
                 whiteSpace: 'pre-line',
               }}
             >
-              Bản đồ nền địa lý được tạo lập từ Các lớp dữ liệu được thu nhận từ
+              Bản đồ nền địa lý được tạo lập từ Các lớp dữ liệu được thu nhận từ Trung tâm Ứng dụng Hệ thống Thông tin Địa lý TP.HCM (HCMGIS)
             </Typography.Text>
           </Col>
           <Col span={6}>

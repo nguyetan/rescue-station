@@ -74,7 +74,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
       {modalVisible ? (
         <AddLayer onAddLayer={handleSaveLayer} onCancel={() => setModalVisible(false)} />
       ) : null}
-      <MapContainer ref={mapRef} center={center as [number, number]} zoom={13}>
+      <MapContainer ref={mapRef} center={center as [number, number]} zoom={17}>
         <TileLayer
           url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
@@ -93,14 +93,16 @@ const Map = ({ layers, onAddLayer }: Props) => {
         </div>
 
         <LayersControl position="topright">
-          <LayersControl.Overlay name="Điểm ven Thuỷ hệ">
+
+          <LayersControl.Overlay name="Thành phố Thủ Đức">
             <WMSTileLayer
               url="http://localhost:8082/geoserver/test/wms"
-              layers="test:thuyhe_diemven2_84"
+              layers="test:tpthuduc_84"
               format="image/png"
               transparent={true}
             />
           </LayersControl.Overlay>
+
           <LayersControl.Overlay name="Một phần thuỷ hệ">
             <WMSTileLayer
               url="http://localhost:8082/geoserver/test/wms"
@@ -109,6 +111,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
               transparent={true}
             />
           </LayersControl.Overlay>
+
           <LayersControl.Overlay name="Một phần đoạn sông">
             <WMSTileLayer
               url="http://localhost:8082/geoserver/test/wms"
@@ -117,10 +120,13 @@ const Map = ({ layers, onAddLayer }: Props) => {
               transparent={true}
             />
           </LayersControl.Overlay>
-          <LayersControl.Overlay name="Thành phố Thủ Đức">
+
+
+
+          <LayersControl.Overlay name="Điểm ven Thuỷ hệ">
             <WMSTileLayer
               url="http://localhost:8082/geoserver/test/wms"
-              layers="	test:tpthuduc_84"
+              layers="test:thuyhe_diemven2_84"
               format="image/png"
               transparent={true}
             />
