@@ -1,8 +1,10 @@
 import proj4 from 'proj4';
 import { parseShp } from 'shpjs';
 
-import { EPSGValuesType, ImportSupportedType } from '../types';
-import { EPSGValues } from './options';
+import { EPSGValuesType } from '../types';
+import { EPSGValues, typeOptions } from './options';
+import { ConvertType } from '../features/webgis/type';
+import papaparse from 'papaparse';
 
 export const switchEPSG = (
   current: keyof EPSGValuesType,
@@ -13,8 +15,8 @@ export const switchEPSG = (
   return convert.forward(coordinate);
 };
 
-export const convertFileToGeoJson = async (type: ImportSupportedType, file: File) => {
-  switch (type) {
+export const convertFileToGeoJson = async (file: File, info: ConvertType) => {
+  switch (info.type) {
     case 'geojson': {
       const text = await file.text();
       return JSON.parse(text);
@@ -31,6 +33,51 @@ export const convertFileToGeoJson = async (type: ImportSupportedType, file: File
         })),
       };
       return geoJson;
+    }
+    case 'csv': {
+      const text = await file.text();
+      const { latCol, lonCol, format } = info.options!;
+      const { data } = papaparse.parse(text, { header: true });
+      let features;
+      if (format === 'point') {
+        features = data.map((row: any) => {
+          const coordinates = switchEPSG('VN2000_HCM', 'EPSG4326', [
+            parseFloat(row[lonCol]),
+            parseFloat(row[latCol]),
+          ]);
+          return {
+            type: 'Feature',
+            geometry: {
+              type: typeOptions[format],
+              coordinates,
+            },
+            properties: {},
+          };
+        });
+      } else {
+        // features = [
+        //   {
+        //     type: 'Feature',
+        //     geometry: {
+        //       type: typeOptions[format],
+        //       coordinates: [
+        //         data.map((row: any) =>
+        //           switchEPSG('VN2000_HCM', 'EPSG4326', [
+        //             parseFloat(row[lonCol]),
+        //             parseFloat(row[latCol]),
+        //           ])
+        //         ),
+        //       ],
+        //     },
+        //     properties: {},
+        //   },
+        // ];
+        throw new Error('Chưa hỗ trợ định dạng này');
+      }
+      return {
+        type: 'FeatureCollection',
+        features,
+      };
     }
     default:
       throw new Error('Chưa hỗ trợ định dạng này');

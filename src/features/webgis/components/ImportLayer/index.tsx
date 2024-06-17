@@ -1,16 +1,29 @@
-/* eslint-disable no-empty */
 import { DeleteOutlined, InboxOutlined } from '@ant-design/icons';
-import { Button, Col, ColorPicker, Form, Input, message, Modal, Radio, Row, Upload } from 'antd';
+import {
+  Button,
+  Col,
+  ColorPicker,
+  Form,
+  Input,
+  message,
+  Modal,
+  Radio,
+  Row,
+  Select,
+  Upload,
+} from 'antd';
 import { BaseButtonProps } from 'antd/es/button/button';
 import { Color } from 'antd/es/color-picker';
 import { ColorFactory } from 'antd/es/color-picker/color';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 
+import papaparse from 'papaparse';
+
 import { supportedFiles } from '../../../../libs/options';
 import { convertFileToGeoJson } from '../../../../libs/utils';
 import { ImportSupportedType } from '../../../../types';
-import { CustomLayer } from '../../type';
+import { CSVOption, ConvertType, CustomLayer } from '../../type';
 
 type Props = BaseButtonProps & {
   onCancel: () => void;
@@ -21,6 +34,8 @@ const ImportLayer = ({ onUpload, onCancel }: Props) => {
   const [file, setFile] = useState<File | null>(null);
   const [importType, setImportType] = useState<ImportSupportedType>('geojson');
   const [form] = Form.useForm<{ color: Color; name: string }>();
+  const [csvForm] = Form.useForm<CSVOption>();
+  const [colCSV, setColCSV] = useState<string[]>([]);
 
   const handleConfirm = async () => {
     try {
@@ -32,7 +47,14 @@ const ImportLayer = ({ onUpload, onCancel }: Props) => {
         message.error('File không đúng định dạng');
         return;
       }
-      const geoJson = await convertFileToGeoJson(importType, file);
+      const info: ConvertType = {
+        type: importType,
+      };
+      if (importType === 'csv') {
+        const { latCol, lonCol, format } = await csvForm.validateFields();
+        info.options = { latCol, lonCol, format };
+      }
+      const geoJson = await convertFileToGeoJson(file, info);
 
       onUpload({ geoJson, color: `#${color.toHex()}`, name, id: nanoid(), converPoint: true });
     } catch (error: any) {
@@ -97,7 +119,18 @@ const ImportLayer = ({ onUpload, onCancel }: Props) => {
           name="file"
           multiple={false}
           accept={`.${importType}`}
-          beforeUpload={(info) => setFile(info as File)}
+          beforeUpload={(info) => {
+            setFile(info as File);
+            if (importType === 'csv') {
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                const result = e.target?.result as string;
+                const { data } = papaparse.parse<string[]>(result);
+                setColCSV(data[0]);
+              };
+              reader.readAsText(info as File);
+            }
+          }}
           showUploadList={false}
         >
           <p className="ant-upload-drag-icon">
@@ -108,9 +141,60 @@ const ImportLayer = ({ onUpload, onCancel }: Props) => {
       ) : (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           {file.name}
-          <DeleteOutlined style={{ color: 'red' }} onClick={() => setFile(null)} />
+          <DeleteOutlined
+            style={{ color: 'red' }}
+            onClick={() => {
+              setFile(null);
+              csvForm.resetFields();
+              setColCSV([]);
+            }}
+          />
         </div>
       )}
+
+      {importType === 'csv' && file ? (
+        <Form
+          form={csvForm}
+          layout="vertical"
+          style={{
+            marginTop: 10,
+          }}
+        >
+          <Row gutter={[24, 4]}>
+            <Col span={12}>
+              <Form.Item
+                label="Cột lon"
+                name="lonCol"
+                rules={[{ required: true, message: 'Vui lòng nhập cột lon' }]}
+              >
+                <Select options={colCSV.map((col) => ({ label: col, value: col }))} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Cột lat"
+                name="latCol"
+                rules={[{ required: true, message: 'Vui lòng nhập cột lat' }]}
+              >
+                <Select options={colCSV.map((col) => ({ label: col, value: col }))} />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                label="Định dạng"
+                name="format"
+                rules={[{ required: true, message: 'Vui lòng chọn định dạng' }]}
+              >
+                <Radio.Group>
+                  <Radio value="point">Điểm</Radio>
+                  <Radio value="polygon">Đa giác</Radio>
+                  <Radio value="line">Đường</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      ) : null}
     </Modal>
   );
 };

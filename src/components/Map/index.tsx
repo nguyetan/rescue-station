@@ -15,6 +15,7 @@ import {
 } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import { useSelector } from 'react-redux';
+import markerIcon from '../../assets/marker.png';
 
 import { selectUserAuthenticated } from '../../features/user/store/selectors';
 import {
@@ -33,8 +34,8 @@ type Props = {
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-icon.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-icon.png',
+  iconRetinaUrl: markerIcon,
+  iconUrl: markerIcon,
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-shadow.png',
 });
 
@@ -74,7 +75,12 @@ const Map = ({ layers, onAddLayer }: Props) => {
       {modalVisible ? (
         <AddLayer onAddLayer={handleSaveLayer} onCancel={() => setModalVisible(false)} />
       ) : null}
-      <MapContainer ref={mapRef} center={center as [number, number]} zoom={17}>
+      <MapContainer
+        ref={mapRef}
+        center={center as [number, number]}
+        zoom={17}
+        attributionControl={false}
+      >
         <TileLayer
           url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
@@ -93,7 +99,6 @@ const Map = ({ layers, onAddLayer }: Props) => {
         </div>
 
         <LayersControl position="topright">
-
           <LayersControl.Overlay name="Thành phố Thủ Đức">
             <WMSTileLayer
               url="http://localhost:8082/geoserver/test/wms"
@@ -120,8 +125,6 @@ const Map = ({ layers, onAddLayer }: Props) => {
               transparent={true}
             />
           </LayersControl.Overlay>
-
-
 
           <LayersControl.Overlay name="Điểm ven Thuỷ hệ">
             <WMSTileLayer

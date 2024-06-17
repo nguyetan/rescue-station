@@ -1,3 +1,5 @@
+import { ImportSupportedType } from '../../types';
+
 export type CustomLayer = {
   id: string;
   geoJson: any;
@@ -42,4 +44,15 @@ export type Feature = {
 export type GeoJson = {
   type: string;
   features: Feature[];
+};
+
+export type CSVOption = {
+  latCol: string;
+  lonCol: string;
+  format: 'point' | 'polygon' | 'line';
+};
+
+export type ConvertType = {
+  type: ImportSupportedType;
+  options?: CSVOption;
 };

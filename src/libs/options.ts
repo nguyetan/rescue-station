@@ -11,6 +11,12 @@ export const supportedFiles = {
   shp: 'Shapefile',
 };
 
+export const typeOptions = {
+  point: 'Point',
+  line: 'LineString',
+  polygon: 'Polygon',
+};
+
 export const EPSGValues: EPSGValuesType = {
   EPSG4326: '+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees',
   EPSG3857:

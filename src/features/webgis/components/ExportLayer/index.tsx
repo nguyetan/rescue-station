@@ -41,6 +41,24 @@ const ExportLayer = ({ onCancel }: Props) => {
       let name = `${data.name}.${format}`;
       let url;
       if (format === 'geojson') {
+        if (findStations[layer]) {
+          console.log(findStations[layer]);
+
+          const features = findStations[layer].map((station) => ({
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [station.XX, station.YY],
+            },
+            properties: {
+              facilityPoints: station.FacilityPoints,
+              id: station.Id,
+            },
+          }));
+          _.set(data, 'geoJson.features', features);
+          _.set(data, 'geoJson.type', 'FeatureCollection');
+        }
+
         const blob = new Blob([JSON.stringify(data.geoJson)], { type: 'application/json' });
         url = URL.createObjectURL(blob);
       } else if (format === 'csv') {
@@ -48,7 +66,7 @@ const ExportLayer = ({ onCancel }: Props) => {
           const csv = Papa.unparse(findStations[layer]);
           const blob = new Blob([csv], { type: 'text/csv' });
           url = URL.createObjectURL(blob);
-          name = `timkiem_${layer}_${moment().format('DDMMYYYY')}.csv`;
+          name = `${layer}_${moment().format('DD.MM.YYYY_HH.mm.ss')}.csv`;
         } else {
           const rows = _.flatten(
             data.geoJson.features.map((feature: Feature) =>
@@ -104,9 +122,11 @@ const ExportLayer = ({ onCancel }: Props) => {
 
         <Form.Item label="Định dạng" name="format">
           <Radio.Group>
-            {Object.entries(supportedFiles).map(([key, name]) => (
-              <Radio value={key}>{name}</Radio>
-            ))}
+            {Object.entries(supportedFiles)
+              .filter(([type]) => type !== 'shp')
+              .map(([key, name]) => (
+                <Radio value={key}>{name}</Radio>
+              ))}
           </Radio.Group>
         </Form.Item>
       </Form>

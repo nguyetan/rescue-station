@@ -1,12 +1,11 @@
 import {
   DeleteOutlined,
-  EyeOutlined,
   FileAddOutlined,
   FileTextOutlined,
   MenuOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Button, Dropdown, Layout, MenuProps, message } from 'antd';
+import { Button, Dropdown, Layout, MenuProps } from 'antd';
 import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -40,11 +39,6 @@ const Webgis = () => {
         icon: <SearchOutlined />,
         key: 'find-station',
         label: 'Tìm trạm cứu hộ',
-      },
-      {
-        icon: <EyeOutlined />,
-        key: 'view-station',
-        label: 'Xem trạm cứu hộ',
       },
     ];
     if (auth) {
@@ -125,9 +119,6 @@ const Webgis = () => {
                   switch (key) {
                     case 'find-station':
                       setFindStation(true);
-                      break;
-                    case 'view-station':
-                      message.info('Tính năng đang phát triển');
                       break;
                     case 'add-layer':
                       setIsImport(true);

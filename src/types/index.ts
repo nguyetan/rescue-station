@@ -6,4 +6,4 @@ export type EPSGValuesType = {
   VN2000_HCM: string;
 };
 
-export type ImportSupportedType = 'shp' | 'geojson';
+export type ImportSupportedType = 'shp' | 'geojson' | 'csv';
