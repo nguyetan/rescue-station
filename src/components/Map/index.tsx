@@ -15,8 +15,8 @@ import {
 } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import { useSelector } from 'react-redux';
-import markerIcon from '../../assets/marker.png';
 
+import markerIcon from '../../assets/marker.png';
 import { selectUserAuthenticated } from '../../features/user/store/selectors';
 import {
   selectWebgisCenter,
