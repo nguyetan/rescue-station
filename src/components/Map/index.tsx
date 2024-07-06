@@ -16,6 +16,7 @@ import {
 import { EditControl } from 'react-leaflet-draw';
 import { useSelector } from 'react-redux';
 
+import anchorIcon from '../../assets/anchor.png';
 import markerIcon from '../../assets/marker.png';
 import { selectUserAuthenticated } from '../../features/user/store/selectors';
 import {
@@ -159,37 +160,74 @@ const Map = ({ layers, onAddLayer }: Props) => {
           ))}
 
           {Object.entries(stationFinded).map(([type, data]) => (
-            <LayersControl.Overlay name={`Tìm kiếm bằng ${_.toUpper(type)}`} key={type} checked>
-              <LayerGroup>
-                {data.map((station) => (
-                  <Marker
-                    position={
-                      switchEPSG('VN2000_HCM', 'EPSG4326', [station.XX, station.YY]).reverse() as [
-                        number,
-                        number
-                      ]
-                    }
-                  >
-                    <Popup>
-                      <div>
+            <>
+              <LayersControl.Overlay name={`Tìm kiếm bằng ${_.toUpper(type)}`} key={type} checked>
+                <LayerGroup>
+                  {data.selected.map((station) => (
+                    <Marker
+                      position={
+                        switchEPSG('VN2000_HCM', 'EPSG4326', [
+                          station.XX,
+                          station.YY,
+                        ]).reverse() as [number, number]
+                      }
+                    >
+                      <Popup>
                         <div>
-                          <b>Id:</b> {station.Id}
+                          <div>
+                            <b>Id:</b> {station.Id}
+                          </div>
+                          <div>
+                            <b>FacilityPoints:</b> {station.FacilityPoints}
+                          </div>
+                          <div>
+                            <b>XX:</b> {station.XX}
+                          </div>
+                          <div>
+                            <b>YY:</b> {station.YY}
+                          </div>
                         </div>
+                      </Popup>
+                    </Marker>
+                  ))}
+                </LayerGroup>
+              </LayersControl.Overlay>
+              <LayersControl.Overlay
+                name={`Các điểm trạm khi kiếm bằng ${_.toUpper(type)}`}
+                key={type}
+              >
+                <LayerGroup>
+                  {data.unselected.map((station) => (
+                    <Marker
+                      icon={new L.Icon({ iconUrl: anchorIcon, iconSize: [30, 30] })}
+                      position={
+                        switchEPSG('VN2000_HCM', 'EPSG4326', [
+                          station.XX,
+                          station.YY,
+                        ]).reverse() as [number, number]
+                      }
+                    >
+                      <Popup>
                         <div>
-                          <b>FacilityPoints:</b> {station.FacilityPoints}
+                          <div>
+                            <b>Id:</b> {station.Id}
+                          </div>
+                          <div>
+                            <b>FacilityPoints:</b> {station.FacilityPoints}
+                          </div>
+                          <div>
+                            <b>XX:</b> {station.XX}
+                          </div>
+                          <div>
+                            <b>YY:</b> {station.YY}
+                          </div>
                         </div>
-                        <div>
-                          <b>XX:</b> {station.XX}
-                        </div>
-                        <div>
-                          <b>YY:</b> {station.YY}
-                        </div>
-                      </div>
-                    </Popup>
-                  </Marker>
-                ))}
-              </LayerGroup>
-            </LayersControl.Overlay>
+                      </Popup>
+                    </Marker>
+                  ))}
+                </LayerGroup>
+              </LayersControl.Overlay>
+            </>
           ))}
         </LayersControl>
 

@@ -18,7 +18,7 @@ export type FindStationType = {
 export type WebgisState = {
   handling: boolean;
   layers: CustomObject<CustomLayer>;
-  stations: CustomObject<FindedPoint[]>;
+  stations: CustomObject<ResponseFindPoint>;
   center: number[];
 };
 
@@ -27,6 +27,11 @@ export type FindedPoint = {
   FacilityPoints: number;
   XX: number;
   YY: number;
+};
+
+export type ResponseFindPoint = {
+  selected: FindedPoint[];
+  unselected: FindedPoint[];
 };
 
 export type Feature = {

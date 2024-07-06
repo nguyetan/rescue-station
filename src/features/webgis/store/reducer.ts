@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
 import { createSlice } from '../../../redux/toolkit';
-import { CustomLayer, FindedPoint, FindStationType, WebgisState } from '../type';
+import { CustomLayer, FindStationType, ResponseFindPoint, WebgisState } from '../type';
 
 export const initialState: WebgisState = {
   handling: false,
@@ -31,7 +31,7 @@ const slice = createSlice({
     findStation(state, _action: PayloadAction<FindStationType>) {
       state.handling = true;
     },
-    updateStationFinded(state, action: PayloadAction<{ type: string; data: FindedPoint[] }>) {
+    updateStationFinded(state, action: PayloadAction<{ type: string; data: ResponseFindPoint }>) {
       state.handling = false;
       state.stations = {
         ...state.stations,

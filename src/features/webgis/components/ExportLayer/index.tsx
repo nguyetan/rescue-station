@@ -44,7 +44,7 @@ const ExportLayer = ({ onCancel }: Props) => {
         if (findStations[layer]) {
           console.log(findStations[layer]);
 
-          const features = findStations[layer].map((station) => ({
+          const features = findStations[layer].selected.map((station) => ({
             type: 'Feature',
             geometry: {
               type: 'Point',
@@ -63,7 +63,7 @@ const ExportLayer = ({ onCancel }: Props) => {
         url = URL.createObjectURL(blob);
       } else if (format === 'csv') {
         if (findStations[layer]) {
-          const csv = Papa.unparse(findStations[layer]);
+          const csv = Papa.unparse(findStations[layer].selected);
           const blob = new Blob([csv], { type: 'text/csv' });
           url = URL.createObjectURL(blob);
           name = `${layer}_${moment().format('DD.MM.YYYY_HH.mm.ss')}.csv`;

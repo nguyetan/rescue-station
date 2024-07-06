@@ -5,13 +5,13 @@ import { all, put, takeLatest } from 'redux-saga/effects';
 import { switchEPSG } from '../../../libs/utils';
 import { backendService } from '../../../services';
 import formatError from '../../../utils/formatError';
-import { FindedPoint, FindStationType } from '../type';
+import { FindStationType, ResponseFindPoint } from '../type';
 import { actions as webgisActions } from './reducer';
 
 function* findStation(action: PayloadAction<FindStationType>) {
   try {
     const { type, ...data } = action.payload;
-    const result: WithApiResult<FindedPoint[]> = yield backendService.post(
+    const result: WithApiResult<ResponseFindPoint> = yield backendService.post(
       `/find${type === 'lscp' ? 'LSCP' : 'PCenter'}`,
       {
         data,
@@ -21,8 +21,8 @@ function* findStation(action: PayloadAction<FindStationType>) {
       const stations = result.data;
 
       const center = switchEPSG('VN2000_HCM', 'EPSG4326', [
-        stations[0].XX,
-        stations[0].YY,
+        stations.selected[0].XX,
+        stations.selected[0].YY,
       ]).reverse();
       yield put(webgisActions.updateStationFinded({ type, data: stations }));
       yield put(webgisActions.changeFocusCenter({ center }));
