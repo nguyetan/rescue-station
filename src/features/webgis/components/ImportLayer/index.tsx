@@ -16,14 +16,13 @@ import { BaseButtonProps } from 'antd/es/button/button';
 import { Color } from 'antd/es/color-picker';
 import { ColorFactory } from 'antd/es/color-picker/color';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
-
 import papaparse from 'papaparse';
+import { useState } from 'react';
 
 import { supportedFiles } from '../../../../libs/options';
 import { convertFileToGeoJson } from '../../../../libs/utils';
 import { ImportSupportedType } from '../../../../types';
-import { CSVOption, ConvertType, CustomLayer } from '../../type';
+import { ConvertType, CSVOption, CustomLayer } from '../../type';
 
 type Props = BaseButtonProps & {
   onCancel: () => void;

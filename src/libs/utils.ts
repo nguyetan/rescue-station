@@ -1,10 +1,10 @@
+import papaparse from 'papaparse';
 import proj4 from 'proj4';
 import { parseShp } from 'shpjs';
 
+import { ConvertType } from '../features/webgis/type';
 import { EPSGValuesType } from '../types';
 import { EPSGValues, typeOptions } from './options';
-import { ConvertType } from '../features/webgis/type';
-import papaparse from 'papaparse';
 
 export const switchEPSG = (
   current: keyof EPSGValuesType,
@@ -40,7 +40,8 @@ export const convertFileToGeoJson = async (file: File, info: ConvertType) => {
       const { data } = papaparse.parse(text, { header: true });
       let features;
       if (format === 'point') {
-        features = data.map((row: any) => {
+        const dataImports = data.filter((row: any) => row[latCol] && row[lonCol]);
+        features = dataImports.map((row: any) => {
           const coordinates = switchEPSG('VN2000_HCM', 'EPSG4326', [
             parseFloat(row[lonCol]),
             parseFloat(row[latCol]),
