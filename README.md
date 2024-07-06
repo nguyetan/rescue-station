@@ -2,21 +2,21 @@
 
 ## Setup enviroment
 
-- Install package
+### Install package
 
 ```
 npm i --force
 ```
 
-- Start code
+### Start code
 
-- - Using bun
+- Using bun
 
 ```
 bun run dev
 ```
 
-- - Using npm
+- Using npm
 
 ```
 npm run windows
