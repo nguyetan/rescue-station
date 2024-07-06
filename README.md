@@ -10,13 +10,13 @@ npm i --force
 
 - Start code
 
-* Using bun
+- - Using bun
 
 ```
 bun run dev
 ```
 
-- Using npm
+- - Using npm
 
 ```
 npm run windows
