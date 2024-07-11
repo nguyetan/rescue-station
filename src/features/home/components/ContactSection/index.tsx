@@ -6,6 +6,7 @@ import home_bg_4 from '../../../../assets/home_bg_3.jpg';
 import logo from '../../../../assets/logo.png';
 import logo_des from '../../../../assets/logo_des.png';
 import { Waiting } from '../../../../components';
+import { URLS } from '../../../../libs/config';
 import { font } from '../../../../libs/theme';
 import { backendService } from '../../../../services';
 
@@ -177,9 +178,9 @@ export const ContactSection = () => {
               }}
             >
               <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/_5XaWph9tM4?si=CEYuHE_6t_zxyoCb"
+                width="95%"
+                height="370"
+                src={URLS.videoDemo}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

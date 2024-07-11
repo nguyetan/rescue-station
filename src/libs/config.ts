@@ -11,4 +11,5 @@ export const URLS = {
     'https://github.com/nguyetan/python-rescue-station/blob/main/scripts/test_demo/testPCenter.ipynb',
   scientificArticle:
     'https://drive.google.com/file/d/1Vu_7-bqzm141oxnjqcEPgMYpFdWRMIH3/view?usp=drive_link',
+  videoDemo: 'https://www.youtube.com/embed/_5XaWph9tM4?si=CEYuHE_6t_zxyoCb',
 };
