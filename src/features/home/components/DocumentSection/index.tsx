@@ -7,6 +7,7 @@ import home_bg_3 from '../../../../assets/home_bg_3.jpg';
 import home_bg_4 from '../../../../assets/home_bg_4.jpg';
 import logo from '../../../../assets/logo.png';
 import { CustomDivider } from '../../../../components';
+import { URLS } from '../../../../libs/config';
 import { font } from '../../../../libs/theme';
 
 export const DocumentSection = () => {
@@ -201,8 +202,8 @@ export const DocumentSection = () => {
                 whiteSpace: 'pre-line',
               }}
             >
-              Duy trì hiệu suất ổn định và không bị gián đoạn. Cải thiện trải nghiệm người dùng
-              ngay cả khi có nhiều lượt truy cập cùng lúc
+              Duy trì hiệu suất ổn định và không bị gián đoạn. Cải thiện trải nghiệm người dùng ngay
+              cả khi có nhiều lượt truy cập cùng lúc
             </Typography.Text>
           </Col>
           <Col span={6}>
@@ -223,7 +224,8 @@ export const DocumentSection = () => {
                 whiteSpace: 'pre-line',
               }}
             >
-              Bản đồ nền địa lý được tạo lập từ Các lớp dữ liệu được thu nhận từ Trung tâm Ứng dụng Hệ thống Thông tin Địa lý TP.HCM (HCMGIS)
+              Bản đồ nền địa lý được tạo lập từ Các lớp dữ liệu được thu nhận từ Trung tâm Ứng dụng
+              Hệ thống Thông tin Địa lý TP.HCM (HCMGIS)
             </Typography.Text>
           </Col>
           <Col span={6}>
@@ -267,7 +269,9 @@ export const DocumentSection = () => {
               display: 'flex',
               alignItems: 'end',
               justifyContent: 'center',
+              cursor: 'pointer',
             }}
+            onClick={() => window.open(URLS.scientificArticle)}
           >
             <Typography.Text
               style={{
@@ -290,7 +294,9 @@ export const DocumentSection = () => {
               display: 'flex',
               alignItems: 'end',
               justifyContent: 'center',
+              cursor: 'pointer',
             }}
+            onClick={() => window.open(URLS.reportWebgis)}
           >
             <Typography.Text
               style={{
@@ -313,7 +319,9 @@ export const DocumentSection = () => {
               display: 'flex',
               alignItems: 'end',
               justifyContent: 'center',
+              cursor: 'pointer',
             }}
+            onClick={() => window.open(URLS.slidesPPt)}
           >
             <Typography.Text
               style={{
@@ -370,7 +378,9 @@ export const DocumentSection = () => {
                 display: 'flex',
                 alignItems: 'end',
                 justifyContent: 'center',
+                cursor: 'pointer',
               }}
+              onClick={() => window.open(URLS.demoPCenter)}
             >
               <Typography.Text
                 style={{
@@ -398,7 +408,9 @@ export const DocumentSection = () => {
                 alignItems: 'end',
                 justifyContent: 'center',
                 marginTop: 20,
+                cursor: 'pointer',
               }}
+              onClick={() => window.open(URLS.demoLSCP)}
             >
               <Typography.Text
                 style={{

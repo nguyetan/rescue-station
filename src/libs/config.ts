@@ -1,1 +1,14 @@
 export const BACKEND = 'http://localhost:5013';
+
+export const URLS = {
+  reportWebgis:
+    'https://docs.google.com/document/d/1U35uYPBPA9eYVFmwmVjgN99vXLPMRQZ2/edit?usp=sharing&ouid=101223793299317624454&rtpof=true&sd=true',
+  slidesPPt:
+    'https://docs.google.com/presentation/d/1A13Je5_tHYRy4cXwn1yNMR65rt2fue2t/edit?usp=sharing&ouid=101223793299317624454&rtpof=true&sd=true',
+  demoLSCP:
+    'https://github.com/nguyetan/python-rescue-station/blob/main/scripts/test_demo/testLSCP.ipynb',
+  demoPCenter:
+    'https://github.com/nguyetan/python-rescue-station/blob/main/scripts/test_demo/testPCenter.ipynb',
+  scientificArticle:
+    'https://drive.google.com/file/d/1Vu_7-bqzm141oxnjqcEPgMYpFdWRMIH3/view?usp=drive_link',
+};
