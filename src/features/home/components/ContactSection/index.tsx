@@ -177,11 +177,14 @@ export const ContactSection = () => {
               }}
             >
               <iframe
-                width={'90%'}
-                height={350}
-                src="https://www.youtube.com/embed/1v_tENXxRE0?si=oczEIFW_qUR0MSa7"
-                allowFullScreen
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/_5XaWph9tM4?si=CEYuHE_6t_zxyoCb"
+                title="YouTube video player"
                 frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
               ></iframe>
             </div>
           </Col>

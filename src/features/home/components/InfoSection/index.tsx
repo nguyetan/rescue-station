@@ -69,7 +69,7 @@ export const InfoSection = () => {
             fontFamily: font.yesevaOne,
           }}
         >
-          Tìm kiếm và tham khảo cách thực liên lạc phù hợp cho từng đối tượng phục vụ.
+          Tìm kiếm và tham khảo cách thức liên lạc phù hợp cho từng đối tượng phục vụ.
         </Typography.Text>
         <Typography.Text
           style={{
@@ -169,7 +169,7 @@ export const InfoSection = () => {
               <div style={{ height: 85, marginTop: 5 }}>
                 <div>
                   <Typography.Text style={{ fontWeight: 'bold' }}>
-                    Trạm cứu hộ, hỗ trợ y tế
+                  Trạm cấp cứu 115 đường thuỷ, Trạm cứu hộ, hỗ trợ y tế
                   </Typography.Text>
                 </div>
                 <Typography.Text style={{ whiteSpace: 'pre-line' }}>

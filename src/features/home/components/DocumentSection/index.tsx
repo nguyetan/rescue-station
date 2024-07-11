@@ -28,7 +28,7 @@ export const DocumentSection = () => {
         <Typography.Text
           style={{
             fontSize: 20,
-            color: '#e9ff09',
+            color: '#f7ff09',
             fontWeight: 'bold',
             fontFamily: font.josefinSans,
           }}
