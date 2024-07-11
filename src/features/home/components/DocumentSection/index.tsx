@@ -277,7 +277,7 @@ export const DocumentSection = () => {
                 marginBottom: 40,
               }}
             >
-              Liên hệ với chúng tôi
+              Báo cáo khoa học
             </Typography.Text>
           </div>
           <div
