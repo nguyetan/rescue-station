@@ -137,7 +137,7 @@ const Webgis = () => {
               placement="bottomLeft"
             >
               <Button>
-                Tính năng
+                Tính năng Ứng dụng WebGIS Trạm cứu hộ đường thuỷ
                 <MenuOutlined />
               </Button>
             </Dropdown>
