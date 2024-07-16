@@ -17,11 +17,12 @@ import { EditControl } from 'react-leaflet-draw';
 import { useSelector } from 'react-redux';
 
 import anchorIcon from '../../assets/anchor.png';
-import markerIcon from '../../assets/marker.png';
+import markerIcon1 from '../../assets/marker_1.png';
 import { selectUserAuthenticated } from '../../features/user/store/selectors';
 import {
   selectWebgisCenter,
   selectWebgisStationsFinded,
+  selectWebgisZoom,
 } from '../../features/webgis/store/selectors';
 import { CustomLayer } from '../../features/webgis/type';
 import { switchEPSG } from '../../libs/utils';
@@ -35,8 +36,8 @@ type Props = {
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon,
-  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon1,
+  iconUrl: markerIcon1,
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-shadow.png',
 });
 
@@ -47,12 +48,17 @@ const Map = ({ layers, onAddLayer }: Props) => {
   const userAuth = useSelector(selectUserAuthenticated);
   const stationFinded = useSelector(selectWebgisStationsFinded);
   const center = useSelector(selectWebgisCenter);
+  const isZoom = useSelector(selectWebgisZoom);
 
   useEffect(() => {
     if (mapRef.current) {
-      mapRef.current.flyTo(center as [number, number]);
+      if (isZoom) {
+        mapRef.current.flyTo(center as [number, number], 20);
+      } else {
+        mapRef.current.flyTo(center as [number, number]);
+      }
     }
-  }, [center]);
+  }, [center, isZoom]);
 
   const handleSaveLayer = (info: { name: string; color: string; id: string }) => {
     const data: any = {};

@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
 import { createSlice } from '../../../redux/toolkit';
-import { CustomLayer, FindStationType, ResponseFindPoint, WebgisState } from '../type';
+import { CustomLayer, FindedPoint, FindStationType, ResponseFindPoint, WebgisState } from '../type';
 
 export const initialState: WebgisState = {
   handling: false,
@@ -45,9 +45,15 @@ const slice = createSlice({
         delete state.stations[id];
       });
     },
-    changeFocusCenter(state, action: PayloadAction<{ center: number[] }>) {
+    changeFocusCenter(state, action: PayloadAction<{ center: number[]; isZoom?: boolean }>) {
       state.handling = false;
       state.center = action.payload.center;
+      state.isZoom = action.payload.isZoom || false;
+    },
+    selectPoint(state, action: PayloadAction<{ type: string; point: FindedPoint }>) {
+      const { type, point } = action.payload;
+      state.handling = false;
+      state.stations[type].selectPoint = point;
     },
     clear: () => initialState,
   },

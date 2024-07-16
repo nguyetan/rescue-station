@@ -17,9 +17,14 @@ import {
   FindStation,
   ImportLayer,
   RemoveLayer,
+  StationFinded,
 } from '../../features/webgis/components';
 import { useWebgisSlice } from '../../features/webgis/store';
-import { selectWebgisHandling, selectWebgisLayers } from '../../features/webgis/store/selectors';
+import {
+  selectWebgisHandling,
+  selectWebgisLayers,
+  selectWebgisStationsFinded,
+} from '../../features/webgis/store/selectors';
 
 const Webgis = () => {
   const layers = useSelector(selectWebgisLayers);
@@ -28,7 +33,9 @@ const Webgis = () => {
   const [isImport, setIsImport] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
   const webgisHandling = useSelector(selectWebgisHandling);
+  const [showStationFinded, setShowStationFinded] = useState(false);
   const auth = useSelector(selectUserAuthenticated);
+  const stationFinded = useSelector(selectWebgisStationsFinded);
 
   const dispatch = useDispatch();
   const { actions } = useWebgisSlice();
@@ -38,7 +45,7 @@ const Webgis = () => {
       {
         icon: <SearchOutlined />,
         key: 'find-station',
-        label: 'Tìm trạm cứu hộ',
+        label: 'Quy hoạch trạm cứu hộ',
       },
     ];
     if (auth) {
@@ -74,6 +81,7 @@ const Webgis = () => {
     >
       {webgisHandling ? <Waiting /> : null}
       {findStation ? <FindStation onCancel={() => setFindStation(false)} /> : null}
+      {showStationFinded ? <StationFinded onCancel={() => setShowStationFinded(false)} /> : null}
       {isImport ? (
         <ImportLayer
           onCancel={() => setIsImport(false)}
@@ -142,6 +150,15 @@ const Webgis = () => {
               </Button>
             </Dropdown>
           </div>
+          {Object.keys(stationFinded).length ? (
+            <div className="leaflet-bottom leaflet-right">
+              <Button
+                className="leaflet-control"
+                onClick={() => setShowStationFinded(true)}
+                icon={<SearchOutlined />}
+              />
+            </div>
+          ) : null}
           <Map
             layers={layers}
             onAddLayer={(newLayer) => dispatch(actions.addLayers({ [newLayer.id]: newLayer }))}

@@ -20,6 +20,7 @@ export type WebgisState = {
   layers: CustomObject<CustomLayer>;
   stations: CustomObject<ResponseFindPoint>;
   center: number[];
+  isZoom?: boolean;
 };
 
 export type FindedPoint = {
@@ -32,6 +33,7 @@ export type FindedPoint = {
 export type ResponseFindPoint = {
   selected: FindedPoint[];
   unselected: FindedPoint[];
+  selectPoint: FindedPoint;
 };
 
 export type Feature = {

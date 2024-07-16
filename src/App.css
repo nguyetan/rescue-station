@@ -68,3 +68,7 @@
   font-weight: bold;
   padding: .8em 1em;
 }
+
+.findPointItem:hover {
+  background-color: #f0f0f0;
+}
