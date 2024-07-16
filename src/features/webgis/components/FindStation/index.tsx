@@ -55,7 +55,20 @@ const FindStation = ({ onCancel }: Props) => {
             <Form.Item
               label="Mã trạm nhỏ nhất"
               name="firstStation"
-              rules={[{ required: true, message: 'Mã trạm từ 0-9840' }]}
+              rules={[
+                { required: true, message: 'Mã trạm từ 0-9840' },
+                {
+                  validator: (_, value) => {
+                    if (isNaN(Number(value))) {
+                      return Promise.reject('Giá trị phải là số');
+                    }
+                    if (Number(value) < 0 || Number(value) > 9840) {
+                      return Promise.reject('Giá trị từ 0-9840');
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
             >
               <Input placeholder="Mã trạm từ 0-9840" />
             </Form.Item>
@@ -64,7 +77,20 @@ const FindStation = ({ onCancel }: Props) => {
             <Form.Item
               label="Mã trạm lớn nhất"
               name="lastStation"
-              rules={[{ required: true, message: 'Mã trạm từ 0-9840' }]}
+              rules={[
+                { required: true, message: 'Mã trạm từ 0-9840' },
+                {
+                  validator: (_, value) => {
+                    if (isNaN(Number(value))) {
+                      return Promise.reject('Giá trị phải là số');
+                    }
+                    if (Number(value) < 0 || Number(value) > 9840) {
+                      return Promise.reject('Giá trị từ 0-9840');
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
             >
               <Input placeholder="Mã trạm từ 0-9840" />
             </Form.Item>
@@ -73,7 +99,21 @@ const FindStation = ({ onCancel }: Props) => {
         <Form.Item
           name="numberStation"
           label="Nhập số trạm cần tìm"
-          rules={[{ required: true, message: 'Số lượng không quá 200' }]}
+          rules={[
+            { required: true, message: 'Số lượng không quá 200' },
+
+            {
+              validator: (_, value) => {
+                if (isNaN(Number(value))) {
+                  return Promise.reject('Giá trị phải là số');
+                }
+                if (Number(value) > 200) {
+                  return Promise.reject('Số lượng không quá 200');
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
         >
           <Input placeholder="Số lượng không quá 200" />
         </Form.Item>

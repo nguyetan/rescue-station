@@ -93,7 +93,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
           maxZoom={20}
         />
-        <div className="leaflet-top leaflet-left" style={{ marginLeft: 220 }}>
+        <div className="leaflet-top leaflet-left" style={{ marginLeft: 100, marginTop: 40 }}>
           {layerEdit.length ? (
             <Button
               type="primary"
