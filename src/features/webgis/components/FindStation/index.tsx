@@ -1,4 +1,5 @@
-import { Button, Col, Form, Input, message, Modal, Row } from 'antd';
+import { Button, Col, Form, Input, message, Modal, Radio, Row, Typography } from 'antd';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { findStationOptions } from '../../../../libs/options';
@@ -12,17 +13,19 @@ type FormValues = {
   firstStation: string;
   lastStation: string;
   numberStation: string;
+  type: string;
 };
 
 const FindStation = ({ onCancel }: Props) => {
   const [form] = Form.useForm<FormValues>();
+  const [type, setType] = useState('pCenter');
   const dispatch = useDispatch();
 
   const { actions } = useWebgisSlice();
-  const handleFindStation = async (key: string) => {
+  const handleFindStation = async () => {
     try {
       const values = await form.validateFields();
-      dispatch(actions.findStation({ ...values, type: key }));
+      dispatch(actions.findStation({ ...values }));
       onCancel();
     } catch {
       message.error('Vui lòng nhập đúng thông tin');
@@ -35,21 +38,30 @@ const FindStation = ({ onCancel }: Props) => {
       onCancel={onCancel}
       title={'Quy hoạch trạm cứu hộ'}
       footer={[
-        <Row justify="space-between">
-          {Object.entries(findStationOptions).map(([key, value]) => (
-            <Button
-              type="primary"
-              style={{ backgroundColor: '#d3a971' }}
-              key={key}
-              onClick={() => handleFindStation(key)}
-            >
-              {`Tìm bằng ${value}`}
-            </Button>
-          ))}
+        <Row justify="end">
+          <Button
+            type="primary"
+            style={{ backgroundColor: '#57b925' }}
+            onClick={() => handleFindStation()}
+          >
+            Thực hiện
+          </Button>
         </Row>,
       ]}
     >
-      <Form form={form} layout="vertical">
+      <Form form={form} layout="vertical" initialValues={{ type: 'pCenter' }}>
+        <Form.Item name="type">
+          <Radio.Group
+            onChange={(e) => {
+              setType(e.target.value);
+            }}
+            value={type}
+          >
+            {Object.entries(findStationOptions).map(([key, name]) => (
+              <Radio value={key}>{name}</Radio>
+            ))}
+          </Radio.Group>
+        </Form.Item>
         <Row justify="space-between" gutter={[12, 12]}>
           <Col span={12}>
             <Form.Item
@@ -98,7 +110,7 @@ const FindStation = ({ onCancel }: Props) => {
         </Row>
         <Form.Item
           name="numberStation"
-          label="Nhập số trạm cần tìm"
+          label={type === 'pCenter' ? 'Nhập số trạm cần tìm' : 'Nhập bán kính'}
           rules={[
             { required: true, message: 'Số lượng không quá 200' },
 
@@ -116,6 +128,9 @@ const FindStation = ({ onCancel }: Props) => {
           ]}
         >
           <Input placeholder="Số lượng không quá 200" />
+          <Typography.Text type="secondary" style={{ fontStyle: 'italic' }}>
+            * Khuyến nghị dưới 200 để đảm bảo tốc độ xử lý nhanh
+          </Typography.Text>
         </Form.Item>
       </Form>
     </Modal>
