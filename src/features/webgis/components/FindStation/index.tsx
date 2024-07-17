@@ -57,8 +57,11 @@ const FindStation = ({ onCancel }: Props) => {
             }}
             value={type}
           >
+            <Typography.Text style={{ paddingRight: 10 }}>Áp dụng: </Typography.Text>
             {Object.entries(findStationOptions).map(([key, name]) => (
-              <Radio value={key}>{name}</Radio>
+              <Radio value={key}>
+                <Typography.Text strong>{name}</Typography.Text>
+              </Radio>
             ))}
           </Radio.Group>
         </Form.Item>
