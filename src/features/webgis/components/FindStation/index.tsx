@@ -128,9 +128,6 @@ const FindStation = ({ onCancel }: Props) => {
           ]}
         >
           <Input placeholder="Số lượng không quá 200" />
-          <Typography.Text type="secondary" style={{ fontStyle: 'italic' }}>
-            * Khuyến nghị dưới 200 để đảm bảo tốc độ xử lý nhanh
-          </Typography.Text>
         </Form.Item>
       </Form>
     </Modal>

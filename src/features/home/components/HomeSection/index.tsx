@@ -31,6 +31,19 @@ export const HomeSection = () => {
           textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
         }}
       >
+        Đề xuất phương án bố trí
+      </Typography.Text>
+      <Typography.Text
+        style={{
+          color: 'white',
+          textAlign: 'center',
+          fontFamily: font.yesevaOne,
+          fontSize: 60,
+          fontWeight: 'bold',
+          letterSpacing: 2,
+          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+        }}
+      >
         Trạm cứu hộ đường thủy
       </Typography.Text>
       <Typography.Title
