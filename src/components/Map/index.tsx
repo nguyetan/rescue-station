@@ -108,7 +108,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
         <LayersControl position="topright">
           <LayersControl.Overlay name="Thành phố Thủ Đức">
             <WMSTileLayer
-              url="http://localhost:8082/geoserver/test/wms"
+              url="http://localhost:8080/geoserver/rescue/wms"
               layers="test:tpthuduc_84"
               format="image/png"
               transparent={true}
@@ -117,7 +117,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
 
           <LayersControl.Overlay name="Một phần thuỷ hệ">
             <WMSTileLayer
-              url="http://localhost:8082/geoserver/test/wms"
+              url="http://localhost:8080/geoserver/rescue/wms"
               layers="test:thuyhe_hcm_motphan_dissolve_84"
               format="image/png"
               transparent={true}
@@ -126,7 +126,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
 
           <LayersControl.Overlay name="Một phần đoạn sông">
             <WMSTileLayer
-              url="http://localhost:8082/geoserver/test/wms"
+              url="http://localhost:8080/geoserver/rescue/wms"
               layers="test:thuyhe_hcm_motphan_dissolve_line5_84"
               format="image/png"
               transparent={true}
@@ -135,7 +135,7 @@ const Map = ({ layers, onAddLayer }: Props) => {
 
           <LayersControl.Overlay name="Điểm ven Thuỷ hệ">
             <WMSTileLayer
-              url="http://localhost:8082/geoserver/test/wms"
+              url="http://localhost:8080/geoserver/rescue/wms"
               layers="test:thuyhe_diemven2_84"
               format="image/png"
               transparent={true}
